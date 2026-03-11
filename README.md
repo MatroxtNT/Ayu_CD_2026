@@ -1,11 +1,12 @@
 
+==============================================
 Documentación Base de Ciencia de Datos
-========================================
+==============================================
 
-Material introductorio para clases que explica los conceptos fundamentales de **Ciencia de Datos y Machine Learning**,
-incluyendo aprendizaje supervisado y no supervisado, uso de **Jupyter Lab**, **Python** y las librerías más utilizadas en análisis de datos.
+Material introductorio para clases que explica los conceptos fundamentales de **Ciencia de Datos y Machine Learning**, incluyendo aprendizaje supervisado y no supervisado, uso de **Jupyter Lab**, **Python** y las librerías más utilizadas en análisis de datos.
 
-Este proyecto está diseñado como **material educativo visual**, pensado para apoyar clases.
+Este proyecto está diseñado como **material educativo visual**, pensado para apoyar clases o introducir estudiantes al ecosistema de Ciencia de Datos.
+
 ---
 
 ## Contenido del material
