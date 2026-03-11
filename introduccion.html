@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentación Base de Ciencia de Datos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <h1>Introducción Ciencia de Datos</h1>
+      <p>
+        Material introductorio para clases, con una visión general del aprendizaje supervisado y no supervisado,
+        el uso de Jupyter Lab, Python y las librerías más utilizadas en análisis de datos y Machine Learning.
+      </p>
+      
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="toc">
+      <h2>Índice</h2>
+      <ul>
+        <li><a href="#intro">1. Introducción general</a></li>
+        <li><a href="#mapa">2. Mapa conceptual de Machine Learning</a></li>
+        <li><a href="#supervisado">3. Aprendizaje supervisado</a></li>
+        <li><a href="#nosupervisado">4. Aprendizaje no supervisado</a></li>
+        <li><a href="#jupyter">5. ¿Qué es Jupyter Lab?</a></li>
+        <li><a href="#python">6. Python en Ciencia de Datos</a></li>
+        <li><a href="#librerias">7. Librerías principales y su uso</a></li>
+        <li><a href="#flujo">8. Flujo típico de trabajo</a></li>
+        <li><a href="#glosario">9. Términos generales</a></li>
+      </ul>
+    </aside>
+
+    <main>
+      <section id="intro">
+        <h2>1. Introducción general</h2>
+        <p>
+          La <strong>Ciencia de Datos</strong> es un área que combina programación, análisis estadístico y conocimiento del problema
+          para transformar datos en información útil. Su objetivo es encontrar patrones, explicar comportamientos y apoyar la toma de decisiones.
+        </p>
+        <p>
+          Dentro de este campo, el <strong>Machine Learning</strong> permite construir modelos que aprenden a partir de ejemplos,
+          ya sea con respuestas conocidas o descubriendo estructuras ocultas en los datos.
+        </p>
+
+        <div class="intro-grid">
+          <div class="card">
+            <span class="pill blue">¿Para qué sirve?</span>
+            <p>Para analizar datos, detectar patrones, hacer predicciones y automatizar decisiones basadas en evidencia.</p>
+          </div>
+          <div class="card">
+            <span class="pill green">¿Qué se necesita?</span>
+            <p>Datos de buena calidad, herramientas de programación, comprensión del problema y métodos de análisis adecuados.</p>
+          </div>
+          <div class="card">
+            <span class="pill orange">¿Qué se aprende?</span>
+            <p>A limpiar datos, explorarlos, modelarlos, evaluarlos y comunicar resultados de forma clara.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="mapa">
+        <h2>2. Mapa conceptual de Machine Learning</h2>
+        <p class="muted">
+          Este esquema resume la organización general de los principales tipos de aprendizaje usados en Ciencia de Datos.
+        </p>
+
+        <div class="map">
+          <h3>Mapa general</h3>
+
+          <div class="node-center">
+            <span class="node main">Machine Learning</span>
+          </div>
+
+          <div class="branches">
+            <div class="branch">
+              <div class="branch-title">
+                <span class="node sup">Aprendizaje Supervisado</span>
+              </div>
+
+              <div class="subgrid">
+                <div class="subbox">
+                  <div><span class="node sub">Clasificación</span></div>
+                  <ul>
+                    <li>Regresión logística</li>
+                    <li>Árboles de decisión</li>
+                    <li>Random Forest</li>
+                    <li>SVM</li>
+                    <li>Redes neuronales</li>
+                  </ul>
+                </div>
+
+                <div class="subbox">
+                  <div><span class="node sub2">Regresión</span></div>
+                  <ul>
+                    <li>Regresión lineal</li>
+                    <li>Regresión polinómica</li>
+                    <li>Ridge / Lasso</li>
+                    <li>Árboles de regresión</li>
+                    <li>Gradient Boosting</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="branch">
+              <div class="branch-title">
+                <span class="node unsup">Aprendizaje No Supervisado</span>
+              </div>
+
+              <div class="subgrid">
+                <div class="subbox">
+                  <div><span class="node sub">Clustering</span></div>
+                  <ul>
+                    <li>K-Means</li>
+                    <li>DBSCAN</li>
+                    <li>Clustering jerárquico</li>
+                    <li>Gaussian Mixture Models</li>
+                  </ul>
+                </div>
+
+                <div class="subbox">
+                  <div><span class="node sub2">Reducción de dimensionalidad</span></div>
+                  <ul>
+                    <li>PCA</li>
+                    <li>t-SNE</li>
+                    <li>UMAP</li>
+                  </ul>
+                </div>
+
+                <div class="subbox" style="grid-column:1 / -1;">
+                  <div>
+                    <span class="node sub" style="background:linear-gradient(135deg,#84cc16,#4d7c0f)">
+                      Reglas de asociación
+                    </span>
+                  </div>
+                  <ul>
+                    <li>Apriori</li>
+                    <li>FP-Growth</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="supervisado">
+        <h2>3. Aprendizaje supervisado</h2>
+        <p>
+          En el aprendizaje supervisado, el modelo entrena con datos que ya tienen una <strong>respuesta conocida</strong>.
+          Es decir, cada ejemplo incluye variables de entrada y una salida esperada.
+        </p>
+
+        <div class="callout">
+          Entrada (<strong>X</strong>) → salida conocida (<strong>y</strong>)
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <span class="pill blue">Clasificación</span>
+            <p>Se utiliza cuando la variable objetivo es una categoría.</p>
+            <p><strong>Ejemplos:</strong> spam / no spam, fraude / no fraude, ataque / normal.</p>
+          </div>
+
+          <div class="card">
+            <span class="pill orange">Regresión</span>
+            <p>Se utiliza cuando la variable objetivo es un valor numérico continuo.</p>
+            <p><strong>Ejemplos:</strong> precio, temperatura, ventas, demanda estimada.</p>
+          </div>
+        </div>
+
+        <h3>Diferencia principal</h3>
+        <div class="table-like">
+          <div class="row">
+            <div>Clasificación</div>
+            <div>Predice clases o categorías.</div>
+          </div>
+          <div class="row">
+            <div>Regresión</div>
+            <div>Predice valores numéricos continuos.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="nosupervisado">
+        <h2>4. Aprendizaje no supervisado</h2>
+        <p>
+          En el aprendizaje no supervisado, los datos <strong>no tienen una variable objetivo</strong>.
+          El modelo busca descubrir relaciones, grupos o estructuras escondidas dentro del conjunto de datos.
+        </p>
+
+        <div class="cards">
+          <div class="card">
+            <span class="pill green">Clustering</span>
+            <p>Agrupa observaciones similares. Sirve para segmentar clientes, documentos, usuarios o comportamientos.</p>
+          </div>
+
+          <div class="card">
+            <span class="pill purple">Reducción de dimensionalidad</span>
+            <p>Reduce la cantidad de variables sin perder demasiada información. Muy útil para visualizar y simplificar datos.</p>
+          </div>
+
+          <div class="card">
+            <span class="pill orange">Reglas de asociación</span>
+            <p>Busca relaciones frecuentes entre variables. Se usa mucho en análisis de canasta de compras.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="jupyter">
+        <h2>5. ¿Qué es Jupyter Lab?</h2>
+
+        <div class="jupyter-box">
+          <div>
+            <p>
+              <strong>Jupyter Lab</strong> es un entorno interactivo donde se puede escribir código, ejecutar análisis,
+              documentar el proceso y mostrar resultados dentro de un mismo archivo llamado <strong>notebook</strong>.
+            </p>
+            <p>
+              Es muy utilizado en clases y proyectos de Ciencia de Datos porque mezcla código, texto explicativo, tablas,
+              gráficos y conclusiones en un formato ordenado y reproducible.
+            </p>
+
+            <div class="callout">
+              Un notebook suele combinar <strong>celdas de código</strong> y <strong>celdas Markdown</strong>.
+            </div>
+          </div>
+
+          <div class="codebox"># Ejemplo simple en Jupyter Lab
+import pandas as pd
+
+df = pd.read_csv("datos.csv")
+df.head()</div>
+        </div>
+
+        <h3>Ventajas de Jupyter Lab</h3>
+        <div class="cards">
+          <div class="card">
+            <h4>Interactividad</h4>
+            <p>Permite ejecutar bloques de código por partes y ver resultados al instante.</p>
+          </div>
+
+          <div class="card">
+            <h4>Documentación</h4>
+            <p>Integra explicaciones con Markdown, ideal para clases y reportes.</p>
+          </div>
+
+          <div class="card">
+            <h4>Visualización</h4>
+            <p>Facilita mostrar tablas, gráficos y salidas de modelos en el mismo entorno.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="python">
+        <h2>6. Python en Ciencia de Datos</h2>
+        <p>
+          <strong>Python</strong> es uno de los lenguajes más utilizados en Ciencia de Datos por su sintaxis simple,
+          su gran comunidad y la enorme cantidad de librerías disponibles para análisis, visualización y Machine Learning.
+        </p>
+        <p>
+          En cursos introductorios suele ser la mejor opción porque permite concentrarse en los conceptos sin que
+          la sintaxis del lenguaje sea una barrera tan grande.
+        </p>
+      </section>
+
+      <section id="librerias">
+        <h2>7. Librerías principales y su uso</h2>
+        <p>
+          Estas son algunas de las librerías más clásicas y útiles para trabajar en Jupyter Lab con Python.
+        </p>
+
+        <div class="library-grid">
+          <div class="library-card">
+            <div class="library-info">
+              <span class="pill blue">NumPy</span>
+              <p><strong>Uso principal:</strong> cálculo numérico.</p>
+              <p>Permite trabajar con arreglos, vectores, matrices y operaciones matemáticas eficientes.</p>
+            </div>
+            <div class="library-code">
+              <pre>import numpy as np
+
+numeros = np.array([1, 2, 3, 4])
+print(numeros.mean())<span class="typing-cursor"></span></pre>
+            </div>
+          </div>
+
+          <div class="library-card">
+            <div class="library-info">
+              <span class="pill green">Pandas</span>
+              <p><strong>Uso principal:</strong> manejo de datos tabulares.</p>
+              <p>Sirve para leer archivos, limpiar información, transformar columnas y analizar DataFrames.</p>
+            </div>
+            <div class="library-code">
+              <pre>import pandas as pd
+
+df = pd.read_csv("datos.csv")
+print(df.head())<span class="typing-cursor"></span></pre>
+            </div>
+          </div>
+
+          <div class="library-card">
+            <div class="library-info">
+              <span class="pill purple">Polars</span>
+              <p><strong>Uso principal:</strong> procesamiento rápido de datos.</p>
+              <p>Es una alternativa moderna para trabajar con datasets grandes de forma más eficiente.</p>
+            </div>
+            <div class="library-code">
+              <pre>import polars as pl
+
+df = pl.read_csv("datos.csv")
+print(df.head())<span class="typing-cursor"></span></pre>
+            </div>
+          </div>
+
+          <div class="library-card">
+            <div class="library-info">
+              <span class="pill orange">Matplotlib</span>
+              <p><strong>Uso principal:</strong> visualización base.</p>
+              <p>Permite construir gráficos de líneas, barras, histogramas, dispersión y muchas otras visualizaciones.</p>
+            </div>
+            <div class="library-code">
+              <pre>import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3], [4, 5, 6])
+plt.show()<span class="typing-cursor"></span></pre>
+            </div>
+          </div>
+
+          <div class="library-card">
+            <div class="library-info">
+              <span class="pill blue">Seaborn</span>
+              <p><strong>Uso principal:</strong> gráficos estadísticos.</p>
+              <p>Facilita crear visualizaciones más elegantes para distribuciones, correlaciones, boxplots y heatmaps.</p>
+            </div>
+            <div class="library-code">
+              <pre>import seaborn as sns
+
+sns.histplot(data=df, x="edad")<span class="typing-cursor"></span></pre>
+            </div>
+          </div>
+
+          <div class="library-card">
+            <div class="library-info">
+              <span class="pill green">Scikit-learn</span>
+              <p><strong>Uso principal:</strong> Machine Learning clásico.</p>
+              <p>Incluye algoritmos de clasificación, regresión, clustering, evaluación y preprocesamiento.</p>
+            </div>
+            <div class="library-code">
+              <pre>from sklearn.linear_model import LinearRegression
+
+modelo = LinearRegression()
+modelo.fit(X, y)<span class="typing-cursor"></span></pre>
+            </div>
+          </div>
+
+          <div class="library-card">
+            <div class="library-info">
+              <span class="pill purple">SciPy</span>
+              <p><strong>Uso principal:</strong> funciones científicas y matemáticas.</p>
+              <p>Entrega herramientas para optimización, álgebra lineal, estadística y procesamiento numérico avanzado.</p>
+            </div>
+            <div class="library-code">
+              <pre>from scipy import stats
+
+resultado = stats.norm.mean()
+print(resultado)<span class="typing-cursor"></span></pre>
+            </div>
+          </div>
+
+          <div class="library-card">
+            <div class="library-info">
+              <span class="pill orange">Statsmodels</span>
+              <p><strong>Uso principal:</strong> modelamiento estadístico.</p>
+              <p>Útil para regresiones estadísticas, pruebas de hipótesis e interpretación más formal de modelos.</p>
+            </div>
+            <div class="library-code">
+              <pre>import statsmodels.api as sm
+
+modelo = sm.OLS(y, X).fit()
+print(modelo.summary())<span class="typing-cursor"></span></pre>
+            </div>
+          </div>
+
+          <div class="library-card">
+            <div class="library-info">
+              <span class="pill blue">TensorFlow / PyTorch</span>
+              <p><strong>Uso principal:</strong> Deep Learning.</p>
+              <p>Se usan para construir redes neuronales más avanzadas en problemas complejos como imágenes, texto o audio.</p>
+            </div>
+            <div class="library-code">
+              <pre>import tensorflow as tf
+
+modelo = tf.keras.Sequential()
+print(modelo)<span class="typing-cursor"></span></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="flujo">
+  <h2>8. Flujo típico de trabajo en Ciencia de Datos</h2>
+  <p>
+    Un proyecto de Ciencia de Datos suele avanzar por etapas conectadas. Cada paso
+    prepara la base para el siguiente, desde entender el problema hasta comunicar resultados.
+  </p>
+
+  <div class="process-diagram">
+
+    <div class="process-step color-azul">
+      <div class="step-number">01</div>
+      <h4>Comprensión del problema</h4>
+      <p>Se define qué se quiere analizar, predecir o resolver.</p>
+    </div>
+
+    <div class="process-arrow">→</div>
+
+    <div class="process-step color-celeste">
+      <div class="step-number">02</div>
+      <h4>Recolección de datos</h4>
+      <p>Se obtiene información desde archivos, bases de datos o APIs.</p>
+    </div>
+
+    <div class="process-arrow">→</div>
+
+    <div class="process-step color-verde">
+      <div class="step-number">03</div>
+      <h4>Limpieza y preparación</h4>
+      <p>Se corrigen nulos, formatos, tipos de datos y duplicados.</p>
+    </div>
+
+    <div class="process-arrow">→</div>
+
+
+    <div class="process-step color-lima">
+      <div class="step-number">04</div>
+      <h4>Análisis exploratorio</h4>
+      <p>Se observan patrones iniciales mediante tablas y gráficos.</p>
+    </div>
+
+    <div class="process-arrow">→</div>
+
+    <div class="process-step color-naranja">
+      <div class="step-number">05</div>
+      <h4>Modelado</h4>
+      <p>Se entrenan algoritmos según el tipo de problema y los datos disponibles.</p>
+    </div>
+
+    <div class="process-arrow">→</div>
+
+    <div class="process-step color-amarillo">
+      <div class="step-number">06</div>
+      <h4>Evaluación</h4>
+      <p>Se mide el rendimiento del modelo con métricas apropiadas.</p>
+    </div>
+
+    <div class="process-arrow">→</div>
+
+    <div class="process-step color-morado">
+      <div class="step-number">07</div>
+      <h4>Interpretación</h4>
+      <p>Se analiza qué significan los resultados y qué aportan al problema.</p>
+    </div>
+
+    <div class="process-arrow">→</div>
+
+    <div class="process-step color-rosa">
+      <div class="step-number">08</div>
+      <h4>Comunicación</h4>
+      <p>Se presentan hallazgos, conclusiones o decisiones derivadas del análisis.</p>
+    </div>
+
+    <div class="process-arrow">→</div>
+
+     <div class="process-step color-white">
+      <div class="step-icon">
+        <img src="https://i.redd.it/acuk990jf3r81.jpg">
+      </div>
+
+      
+    </div>
+
+  </div>
+</section>
+
+      <section id="glosario">
+        <h2>9. Términos generales</h2>
+        <div class="glossary">
+          <div class="gloss">
+            <h4>Dataset</h4>
+            <p>Conjunto de datos con el que se trabaja.</p>
+          </div>
+
+          <div class="gloss">
+            <h4>Variable</h4>
+            <p>Cada característica o columna del dataset.</p>
+          </div>
+
+          <div class="gloss">
+            <h4>Observación</h4>
+            <p>Cada fila o registro de los datos.</p>
+          </div>
+
+          <div class="gloss">
+            <h4>Feature</h4>
+            <p>Variable de entrada usada para entrenar un modelo.</p>
+          </div>
+
+          <div class="gloss">
+            <h4>Target</h4>
+            <p>Variable objetivo que se quiere predecir.</p>
+          </div>
+
+          <div class="gloss">
+            <h4>Modelo</h4>
+            <p>Representación matemática que aprende patrones desde los datos.</p>
+          </div>
+
+          <div class="gloss">
+            <h4>Entrenamiento</h4>
+            <p>Proceso en que el modelo aprende usando ejemplos.</p>
+          </div>
+
+          <div class="gloss">
+            <h4>Métrica</h4>
+            <p>Medida usada para evaluar qué tan bien funciona un modelo.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Documento introductorio de clases de Ciencia de Datos, by Mx.
+  </footer>
+</body>
+</html>
