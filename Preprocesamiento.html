@@ -370,6 +370,9 @@
                   Son registros repetidos total o parcialmente. Pueden distorsionar el análisis si se cuentan más de una vez.
                 </p>
                 <div class="example-box">
+                  <strong>Ejemplo:</strong> el estudiante con ID 123-k aparece dos veces con exactamente los mismos datos.
+                </div>
+                <div class="note-box">
                   <strong>Qué se hace:</strong> normalmente se eliminan o se revisan para confirmar si realmente son duplicados.
                 </div>
               </div>
@@ -380,6 +383,9 @@
                   Son datos ausentes, vacíos o no registrados en una celda.
                 </p>
                 <div class="example-box">
+                  <strong>Ejemplo:</strong> un estudiante tiene registrada su carrera y promedio, pero la columna de edad aparece vacía.
+                </div>
+                <div class="note-box">
                   <strong>Qué se hace:</strong> se pueden eliminar, imputar con media, mediana, moda,
                   o reemplazar según el contexto.
                 </div>
@@ -391,6 +397,9 @@
                   Son valores muy alejados del comportamiento general de los datos.
                 </p>
                 <div class="example-box">
+                  <strong>Ejemplo:</strong> si la mayoría de las edades está entre 18 y 30 años, un registro de 70 años podría verse como un valor atípico.
+                </div>
+                <div class="note-box">
                   <strong>Qué se hace:</strong> se revisan, se justifican, se corrigen o se eliminan
                   si corresponden a errores o afectan el análisis.
                 </div>
@@ -402,7 +411,42 @@
                   El ruido corresponde a errores o alteraciones que hacen que un dato no refleje correctamente la realidad.
                 </p>
                 <div class="example-box">
+                  <strong>Ejemplo:</strong> escribir “Bieenvenidp” en lugar de “Bienvenidos”, o digitar mal un número de teléfono.
+                </div>
+                <div class="note-box">
                   <strong>Qué se hace:</strong> se detecta y se intenta corregir usando técnicas de comparación.
+                </div>
+              </div>
+            </div>
+
+            <h3>Detección matemática de outliers</h3>
+            <p>
+              Para detectar un outlier de forma más formal, se pueden usar medidas como
+              <strong>Z-score</strong> o <strong>IQR</strong>.
+            </p>
+
+            <div class="cards">
+              <div class="card">
+                <span class="pill blue">Z-score</span>
+                <p>
+                  El Z-score mide cuántas desviaciones estándar se aleja un dato de la media.
+                  Si el valor absoluto del Z-score es muy alto, el dato podría considerarse atípico.
+                </p>
+                <div class="formula">
+z = (x - media) / desviación_estándar
+                </div>
+              </div>
+
+              <div class="card">
+                <span class="pill orange">IQR</span>
+                <p>
+                  El IQR o <strong>rango intercuartílico</strong> mide la amplitud del 50% central de los datos.
+                  Un valor muy por debajo o muy por encima de ese rango puede ser un outlier.
+                </p>
+                <div class="formula">
+IQR = Q3 - Q1
+Límite inferior = Q1 - 1.5 * IQR
+Límite superior = Q3 + 1.5 * IQR
                 </div>
               </div>
             </div>
@@ -424,8 +468,15 @@ A = 8374629152
 B = 8375628153
                 </div>
                 <p>
-                  Comparando posición por posición, cambia el 4 por 5, el 9 por 8 y el 2 por 3.
-                  Entonces la distancia es 3.
+                  Comparando posición por posición:
+                </p>
+                <ul class="step-list">
+                  <li>Posición 4: 4 cambió por 5</li>
+                  <li>Posición 7: 9 cambió por 8</li>
+                  <li>Posición 10: 2 cambió por 3</li>
+                </ul>
+                <p>
+                  Entonces la <strong>distancia de Hamming es 3</strong>, porque hay 3 posiciones diferentes.
                 </p>
               </div>
 
@@ -436,12 +487,21 @@ B = 8375628153
                   Las operaciones son insertar, eliminar o sustituir caracteres.
                 </p>
                 <div class="formula">
-A = Bienvenidos
-B = Bieenvenidp
+Origen  = Bieenvenidp
+Destino = Bienvenidos
                 </div>
                 <p>
-                  Aquí se puede observar que hay errores de escritura. La distancia mide el mínimo de cambios
-                  necesarios para transformar una palabra en la otra.
+                  Si queremos ir desde <strong>Bieenvenidp</strong> hasta <strong>Bienvenidos</strong>,
+                  una forma simple de verlo es esta:
+                </p>
+                <ul class="step-list">
+                  <li><strong>Eliminar</strong> una <strong>e</strong> extra después de “Bi” para pasar de <em>Bieenvenidp</em> a <em>Bienvenidp</em>.</li>
+                  <li><strong>Sustituir</strong> la penúltima letra <strong>p</strong> por <strong>o</strong> para obtener <em>Bienvenido</em>.</li>
+                  <li><strong>Insertar</strong> la última letra <strong>s</strong> para obtener <em>Bienvenidos</em>.</li>
+                </ul>
+                <p>
+                  Con esas 3 operaciones ya se logra la transformación,
+                  por lo que la <strong>distancia de Levenshtein es 3</strong>.
                 </p>
               </div>
             </div>
@@ -616,4 +676,3 @@ x_norm = (x - x_min) / (x_max - x_min)
   </footer>
 </body>
 </html>
-EOF
