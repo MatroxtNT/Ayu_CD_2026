@@ -1,0 +1,620 @@
+cat > conceptos_basicos.html <<'EOF'
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conceptos Básicos | Ciencia de Datos</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .topic-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+      gap:22px;
+      margin-top:20px;
+    }
+
+    .mini-card{
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:22px;
+      background:linear-gradient(180deg,#ffffff 0%, #f8fbff 100%);
+      box-shadow:var(--shadow);
+    }
+
+    .mini-card h4{
+      margin:0 0 10px;
+      font-size:1.02rem;
+      color:#0f172a;
+    }
+
+    .formula{
+      background:#0b1736;
+      color:#e2e8f0;
+      border-radius:18px;
+      padding:18px 22px;
+      font-family:Consolas, "Courier New", monospace;
+      overflow:auto;
+      line-height:1.9;
+      margin:18px 0;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+    }
+
+    .stage-box{
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:24px;
+      background:linear-gradient(180deg,#ffffff 0%, #f8fbff 100%);
+      margin-top:22px;
+    }
+
+    .substage{
+      margin-top:22px;
+      padding-top:22px;
+      border-top:1px solid #e5edf7;
+    }
+
+    .substage:first-child{
+      margin-top:0;
+      padding-top:0;
+      border-top:none;
+    }
+
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:12px 0 16px;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      padding:7px 12px;
+      border-radius:999px;
+      font-size:.88rem;
+      font-weight:700;
+      border:1px solid rgba(15,23,42,.08);
+      background:#f8fafc;
+      color:#0f172a;
+    }
+
+    .example-box{
+      border-left:5px solid var(--primary);
+      background:#f0f9ff;
+      padding:16px 18px;
+      border-radius:12px;
+      margin-top:14px;
+    }
+
+    .note-box{
+      border-left:5px solid #22c55e;
+      background:#f0fdf4;
+      padding:16px 18px;
+      border-radius:12px;
+      margin-top:14px;
+    }
+
+    .warn-box{
+      border-left:5px solid #f59e0b;
+      background:#fffbeb;
+      padding:16px 18px;
+      border-radius:12px;
+      margin-top:14px;
+    }
+
+    .compare-table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:18px;
+      overflow:hidden;
+      border-radius:14px;
+      background:white;
+      box-shadow:var(--shadow);
+    }
+
+    .compare-table th,
+    .compare-table td{
+      border:1px solid var(--border);
+      padding:14px 16px;
+      text-align:left;
+      vertical-align:top;
+    }
+
+    .compare-table th{
+      background:#f8fafc;
+    }
+
+    .step-list{
+      margin:14px 0 0 20px;
+    }
+
+    .step-list li{
+      margin:8px 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <h1>Conceptos Básicos de Ciencia de Datos</h1>
+      <p>
+        Resumen explicativo del marco CRISP-DM y de las ideas fundamentales que aparecen
+        en la etapa de comprensión y preparación de datos, con ejemplos simples y lenguaje claro.
+      </p>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="toc">
+      <h2>Índice</h2>
+      <ul>
+        <li><a href="#crispdm">1. ¿Qué es CRISP-DM?</a></li>
+        <li><a href="#understanding">2. Data Understanding</a></li>
+        <li><a href="#recoleccion">2.1 Recolección inicial</a></li>
+        <li><a href="#descripcion">2.2 Descripción de los datos</a></li>
+        <li><a href="#exploracion">2.3 Exploración de los datos</a></li>
+        <li><a href="#calidad">2.4 Análisis de calidad</a></li>
+        <li><a href="#preparation">3. Data Preparation</a></li>
+        <li><a href="#seleccion">3.1 Selección</a></li>
+        <li><a href="#limpieza">3.2 Limpieza</a></li>
+        <li><a href="#construccion">3.3 Construcción</a></li>
+        <li><a href="#reconstruccion">3.4 Reconstrucción</a></li>
+        <li><a href="#discretizacion">3.4.1 Discretización</a></li>
+        <li><a href="#escalamiento">3.4.2 Escalamiento</a></li>
+        <li><a href="#normalizacion">3.4.3 Normalización</a></li>
+      </ul>
+    </aside>
+
+    <main>
+      <section id="crispdm">
+        <h2>1. ¿Qué es CRISP-DM?</h2>
+        <p>
+          <strong>CRISP-DM</strong> es un marco de trabajo utilizado para organizar proyectos de
+          minería de datos, ciencia de datos y aprendizaje automático. Su función es ordenar el proceso
+          completo, desde que se entiende el problema hasta que los resultados se interpretan o se aplican.
+        </p>
+        <p>
+          La idea principal es que un proyecto no comienza entrenando modelos, sino entendiendo
+          primero el contexto, los datos y la calidad de la información disponible.
+        </p>
+
+        <div class="intro-grid">
+          <div class="card">
+            <span class="pill blue">¿Para qué sirve?</span>
+            <p>Sirve para seguir un orden lógico en un proyecto de datos y no saltarse etapas importantes.</p>
+          </div>
+          <div class="card">
+            <span class="pill green">¿Qué organiza?</span>
+            <p>La comprensión del problema, el análisis de los datos, su preparación y el modelamiento posterior.</p>
+          </div>
+          <div class="card">
+            <span class="pill orange">Idea clave</span>
+            <p>Primero se entiende el problema y los datos; después se transforman y recién luego se modela.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="understanding">
+        <h2>2. Etapa: Data Understanding</h2>
+        <p>
+          La etapa de <strong>Data Understanding</strong> busca conocer los datos antes de modificarlos.
+          Aquí se revisa qué información existe, cómo está estructurada, qué tipos de variables aparecen,
+          qué patrones se observan y si hay problemas de calidad.
+        </p>
+
+        <div class="stage-box">
+          <div class="substage" id="recoleccion">
+            <h3>2.1 Subetapa: Recolección inicial</h3>
+            <p>
+              En esta subetapa se reúnen los datos que estarán disponibles para el proyecto.
+              La idea es identificar desde dónde vienen y en qué formato están.
+            </p>
+
+            <div class="tag-row">
+              <span class="tag">Datos estructurados</span>
+              <span class="tag">Datos semiestructurados</span>
+              <span class="tag">Datos no estructurados</span>
+            </div>
+
+            <div class="topic-grid">
+              <div class="mini-card">
+                <h4>Datos estructurados</h4>
+                <p>
+                  Son datos organizados en tablas con filas y columnas, como una base de datos o un archivo Excel.
+                </p>
+                <div class="example-box">
+                  <strong>Ejemplo:</strong> una tabla de estudiantes con columnas como ID, edad, carrera y promedio.
+                </div>
+              </div>
+
+              <div class="mini-card">
+                <h4>Datos semiestructurados</h4>
+                <p>
+                  Tienen cierto orden, pero no siguen una tabla rígida. Suelen venir en formatos como JSON o XML.
+                </p>
+                <div class="example-box">
+                  <strong>Ejemplo:</strong> un archivo JSON con datos de usuarios y atributos variables.
+                </div>
+              </div>
+
+              <div class="mini-card">
+                <h4>Datos no estructurados</h4>
+                <p>
+                  No están organizados en columnas fijas. Aquí suelen aparecer textos, imágenes, audios o videos.
+                </p>
+                <div class="example-box">
+                  <strong>Ejemplo:</strong> comentarios escritos por clientes o fotografías almacenadas en carpetas.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="substage" id="descripcion">
+            <h3>2.2 Subetapa: Descripción de los datos</h3>
+            <p>
+              En esta subetapa se explica qué representa cada atributo y qué tipo de dato contiene.
+              Esto es importante porque el tipo de variable condiciona el análisis que se puede hacer después.
+            </p>
+
+            <div class="topic-grid">
+              <div class="mini-card">
+                <h4>Numérica discreta</h4>
+                <p>
+                  Corresponde a cantidades enteras y contables. No suele admitir valores intermedios con decimales.
+                </p>
+                <div class="example-box">
+                  <strong>Ejemplo:</strong> número de hijos, cantidad de cursos aprobados, total de productos.
+                </div>
+              </div>
+
+              <div class="mini-card">
+                <h4>Numérica continua</h4>
+                <p>
+                  Puede tomar cualquier valor dentro de un rango, incluyendo decimales.
+                </p>
+                <div class="example-box">
+                  <strong>Ejemplo:</strong> promedio, peso, temperatura o ingreso mensual.
+                </div>
+              </div>
+
+              <div class="mini-card">
+                <h4>Categórica nominal</h4>
+                <p>
+                  Representa categorías sin orden natural entre ellas.
+                </p>
+                <div class="example-box">
+                  <strong>Ejemplo:</strong> carrera, ciudad, color, tipo de contrato.
+                </div>
+              </div>
+
+              <div class="mini-card">
+                <h4>Categórica ordinal</h4>
+                <p>
+                  Representa categorías que sí tienen un orden lógico entre sus niveles.
+                </p>
+                <div class="example-box">
+                  <strong>Ejemplo:</strong> bajo, medio y alto; o malo, regular y bueno.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="substage" id="exploracion">
+            <h3>2.3 Subetapa: Exploración de los datos</h3>
+            <p>
+              En la exploración de datos se revisan patrones iniciales, distribuciones, relaciones entre variables
+              y comportamientos llamativos. Aquí se usan tablas resumen y gráficos para obtener una visión general.
+            </p>
+
+            <div class="note-box">
+              <strong>En esta subetapa normalmente se hacen gráficos</strong> como histogramas, boxplots,
+              gráficos de barras, gráficos de dispersión y mapas de calor.
+            </div>
+
+            <div class="example-box">
+              <strong>Ejemplo:</strong> hacer un histograma para ver cómo se distribuyen los promedios
+              o un gráfico de barras para comparar carreras.
+            </div>
+          </div>
+
+          <div class="substage" id="calidad">
+            <h3>2.4 Subetapa: Análisis de calidad</h3>
+            <p>
+              Aquí se detectan problemas que afectan la confiabilidad de los datos. Por ejemplo,
+              valores faltantes, registros duplicados, errores de digitación, ruido, datos inconsistentes
+              o valores extremadamente alejados.
+            </p>
+
+            <div class="warn-box">
+              La idea principal es revisar si los datos realmente son utilizables antes de pasar
+              a la etapa de preparación.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="preparation">
+        <h2>3. Etapa: Data Preparation</h2>
+        <p>
+          La etapa de <strong>Data Preparation</strong> transforma los datos para dejarlos listos
+          para análisis posteriores o para ser utilizados por un modelo. Aquí se seleccionan variables,
+          se corrigen errores, se crean nuevas columnas y se transforman atributos.
+        </p>
+
+        <div class="stage-box">
+          <div class="substage" id="seleccion">
+            <h3>3.1 Subetapa: Selección</h3>
+            <p>
+              La selección consiste en elegir qué datos, atributos o columnas serán útiles para el análisis.
+              No siempre conviene trabajar con todo, porque puede haber variables irrelevantes,
+              redundantes o poco informativas.
+            </p>
+
+            <div class="example-box">
+              <strong>Ejemplo:</strong> si quiero analizar rendimiento académico, podría seleccionar
+              promedio, asistencia y número de evaluaciones, y dejar fuera un atributo que no aporta.
+            </div>
+          </div>
+
+          <div class="substage" id="limpieza">
+            <h3>3.2 Subetapa: Limpieza</h3>
+            <p>
+              La limpieza corrige problemas de calidad en los datos. Aquí se tratan registros repetidos,
+              datos faltantes, valores atípicos y ruido.
+            </p>
+
+            <div class="topic-grid">
+              <div class="mini-card">
+                <h4>Valores duplicados</h4>
+                <p>
+                  Son registros repetidos total o parcialmente. Pueden distorsionar el análisis si se cuentan más de una vez.
+                </p>
+                <div class="example-box">
+                  <strong>Qué se hace:</strong> normalmente se eliminan o se revisan para confirmar si realmente son duplicados.
+                </div>
+              </div>
+
+              <div class="mini-card">
+                <h4>Valores faltantes</h4>
+                <p>
+                  Son datos ausentes, vacíos o no registrados en una celda.
+                </p>
+                <div class="example-box">
+                  <strong>Qué se hace:</strong> se pueden eliminar, imputar con media, mediana, moda,
+                  o reemplazar según el contexto.
+                </div>
+              </div>
+
+              <div class="mini-card">
+                <h4>Outliers</h4>
+                <p>
+                  Son valores muy alejados del comportamiento general de los datos.
+                </p>
+                <div class="example-box">
+                  <strong>Qué se hace:</strong> se revisan, se justifican, se corrigen o se eliminan
+                  si corresponden a errores o afectan el análisis.
+                </div>
+              </div>
+
+              <div class="mini-card">
+                <h4>Ruido</h4>
+                <p>
+                  El ruido corresponde a errores o alteraciones que hacen que un dato no refleje correctamente la realidad.
+                </p>
+                <div class="example-box">
+                  <strong>Qué se hace:</strong> se detecta y se intenta corregir usando técnicas de comparación.
+                </div>
+              </div>
+            </div>
+
+            <h3>Ruido en datos: Hamming y Levenshtein</h3>
+            <p>
+              Dos medidas útiles para comparar cadenas o secuencias son la <strong>distancia de Hamming</strong>
+              y la <strong>distancia de Levenshtein</strong>.
+            </p>
+
+            <div class="cards">
+              <div class="card">
+                <span class="pill blue">Distancia de Hamming</span>
+                <p>
+                  Cuenta cuántas posiciones distintas hay entre dos cadenas del mismo largo.
+                </p>
+                <div class="formula">
+A = 8374629152
+B = 8375628153
+                </div>
+                <p>
+                  Comparando posición por posición, cambia el 4 por 5, el 9 por 8 y el 2 por 3.
+                  Entonces la distancia es 3.
+                </p>
+              </div>
+
+              <div class="card">
+                <span class="pill orange">Distancia de Levenshtein</span>
+                <p>
+                  Mide cuántas operaciones mínimas se necesitan para transformar una cadena en otra.
+                  Las operaciones son insertar, eliminar o sustituir caracteres.
+                </p>
+                <div class="formula">
+A = Bienvenidos
+B = Bieenvenidp
+                </div>
+                <p>
+                  Aquí se puede observar que hay errores de escritura. La distancia mide el mínimo de cambios
+                  necesarios para transformar una palabra en la otra.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="substage" id="construccion">
+            <h3>3.3 Subetapa: Construcción de datos</h3>
+            <p>
+              La construcción consiste en crear nuevas variables a partir de otras ya existentes.
+              Esto permite representar mejor la información y generar atributos más útiles.
+            </p>
+
+            <div class="example-box">
+              <strong>Ejemplo:</strong> si tengo <em>Nota_1</em> y <em>Nota_2</em>,
+              puedo construir una nueva columna llamada <strong>Promedio</strong>.
+            </div>
+
+            <div class="formula">
+Promedio = (Nota_1 + Nota_2) / 2
+            </div>
+
+            <div class="note-box">
+              La construcción agrega valor porque transforma datos originales en variables más interpretables.
+            </div>
+          </div>
+
+          <div class="substage" id="reconstruccion">
+            <h3>3.4 Subetapa: Reconstrucción de datos</h3>
+            <p>
+              La reconstrucción transforma la forma en que se representan los datos.
+              Aquí entran procesos como discretizar variables numéricas o cambiar la escala de los atributos.
+            </p>
+
+            <div class="substage" id="discretizacion">
+              <h3>3.4.1 Discretización</h3>
+              <p>
+                La discretización convierte una variable numérica continua en categorías o intervalos.
+                Esto se usa cuando conviene pasar de números exactos a niveles como bajo, medio y alto.
+              </p>
+
+              <div class="cards">
+                <div class="card">
+                  <span class="pill green">Por amplitud</span>
+                  <p>
+                    Divide el rango total en intervalos del mismo tamaño.
+                  </p>
+                  <div class="example-box">
+                    <strong>Ejemplo:</strong> si los promedios van de 4,0 a 7,0,
+                    se puede dividir en:
+                    <br>Bajo: 4,0 - 4,9
+                    <br>Medio: 5,0 - 5,9
+                    <br>Alto: 6,0 - 7,0
+                  </div>
+                </div>
+
+                <div class="card">
+                  <span class="pill purple">Por frecuencia</span>
+                  <p>
+                    Divide los datos en grupos con cantidades similares de observaciones.
+                  </p>
+                  <div class="example-box">
+                    <strong>Ejemplo:</strong> si quiero tres categorías, cada grupo puede contener
+                    aproximadamente un tercio de los datos, aunque los intervalos no tengan el mismo ancho.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="substage" id="escalamiento">
+              <h3>3.4.2 Escalamiento</h3>
+              <p>
+                El escalamiento consiste en cambiar la magnitud de las variables para que queden en rangos comparables.
+                Esto es importante porque algunas variables pueden tener números mucho más grandes que otras
+                y dominar los cálculos del modelo.
+              </p>
+
+              <div class="example-box">
+                <strong>Ejemplo:</strong> una persona puede tener edad 20 e ingreso 800000,
+                mientras otra tiene edad 30 e ingreso 1200000. La diferencia en ingreso parece enorme
+                respecto de la edad, aunque ambas variables podrían ser importantes.
+              </div>
+
+              <div class="note-box">
+                Escalar ayuda a que una variable no pese más que otra solamente por tener valores numéricos mayores.
+              </div>
+            </div>
+
+            <div class="substage" id="normalizacion">
+              <h3>3.4.3 Normalización</h3>
+              <p>
+                La normalización es una forma específica de escalamiento en la que los valores se llevan,
+                por ejemplo, al rango <strong>[0,1]</strong>. Así todas las variables quedan en una escala comparable.
+              </p>
+
+              <div class="formula">
+x_norm = (x - x_min) / (x_max - x_min)
+              </div>
+
+              <p>
+                Esta es la fórmula de <strong>Min-Max</strong>. Toma un valor original y lo convierte
+                a un nuevo valor dentro del rango 0 a 1.
+              </p>
+
+              <table class="compare-table">
+                <thead>
+                  <tr>
+                    <th>Variable</th>
+                    <th>Rango original</th>
+                    <th>Valor original</th>
+                    <th>Valor normalizado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Edad</td>
+                    <td>[18, 60]</td>
+                    <td>20</td>
+                    <td>(20 - 18) / (60 - 18) = 2 / 42 ≈ 0,047</td>
+                  </tr>
+                  <tr>
+                    <td>Ingreso</td>
+                    <td>[300000, 1500000]</td>
+                    <td>800000</td>
+                    <td>(800000 - 300000) / (1500000 - 300000) = 500000 / 1200000 ≈ 0,416</td>
+                  </tr>
+                  <tr>
+                    <td>Edad</td>
+                    <td>[18, 60]</td>
+                    <td>30</td>
+                    <td>(30 - 18) / (60 - 18) = 12 / 42 ≈ 0,285</td>
+                  </tr>
+                  <tr>
+                    <td>Ingreso</td>
+                    <td>[300000, 1500000]</td>
+                    <td>1200000</td>
+                    <td>(1200000 - 300000) / (1500000 - 300000) = 900000 / 1200000 = 0,75</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="example-box">
+                <strong>Interpretación:</strong> después de normalizar, la diferencia en edad y en ingreso
+                ya puede compararse mejor, porque ambas quedaron dentro del mismo rango.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>4. Resumen final</h2>
+        <p>
+          El marco CRISP-DM permite organizar un proyecto de datos paso a paso. En este contenido se revisaron
+          dos etapas clave:
+        </p>
+
+        <ul class="step-list">
+          <li><strong>Data Understanding:</strong> entender qué datos existen, qué tipos tienen, cómo se comportan y qué problemas presentan.</li>
+          <li><strong>Data Preparation:</strong> seleccionar, limpiar, construir y transformar datos para que queden listos para trabajar con ellos.</li>
+        </ul>
+
+        <div class="callout">
+          La idea central es que un buen análisis no depende solo del modelo, sino también de entender
+          y preparar correctamente los datos desde el inicio.
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Página de conceptos básicos de Ciencia de Datos, by Mx.
+  </footer>
+</body>
+</html>
+EOF
