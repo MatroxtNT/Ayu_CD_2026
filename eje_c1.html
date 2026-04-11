@@ -3,173 +3,253 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Preguntas de Repaso | Preprocesamiento y No Supervisado</title>
+  <title>Formulario de Repaso | Preprocesamiento y No Supervisado</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .quiz-hero{
+    .hero-lite{
       background:
         radial-gradient(circle at top left, rgba(56,189,248,.20), transparent 28%),
         radial-gradient(circle at top right, rgba(34,197,94,.18), transparent 24%),
         linear-gradient(135deg, #0f172a 0%, #111827 100%);
       color:white;
-      padding:64px 28px 48px;
+      padding:56px 24px 42px;
       border-bottom:6px solid rgba(56,189,248,.35);
-      border-radius:50px;
+      border-radius:40px;
       text-align:center;
+      margin:24px;
     }
 
-    .quiz-wrap{
-      max-width:1400px;
+    .hero-lite h1{
+      margin:0 0 10px;
+      font-size:clamp(2rem, 3vw, 3rem);
+    }
+
+    .hero-lite p{
       margin:0 auto;
+      max-width:900px;
+      color:#dbeafe;
+      line-height:1.7;
     }
 
-    .quiz-layout{
-      max-width:1400px;
-      margin:32px auto 70px;
+    .quiz-container{
+      max-width:1200px;
+      margin:0 auto 60px;
       padding:0 24px;
-      display:grid;
-      grid-template-columns:280px 1fr;
-      gap:30px;
-      align-items:start;
     }
 
-    .quiz-toc{
-      position:sticky;
-      top:18px;
-      background:white;
-      border:1px solid var(--border);
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      padding:24px 18px;
-    }
-
-    .quiz-toc h2{
-      margin:0 0 14px;
-      font-size:1.1rem;
-    }
-
-    .quiz-toc ul{
-      list-style:none;
-      margin:0;
-      padding:0;
-    }
-
-    .quiz-toc li + li{
-      margin-top:10px;
-    }
-
-    .quiz-toc a{
-      text-decoration:none;
-      color:#1e3a8a;
-      display:block;
-      padding:9px 10px;
-      border-radius:10px;
-      transition:.2s ease;
-      font-size:.96rem;
-    }
-
-    .quiz-toc a:hover{
-      background:#eff6ff;
-      color:#0369a1;
-    }
-
-    .quiz-main{
-      display:flex;
-      flex-direction:column;
-      gap:28px;
-    }
-
-    .quiz-section{
+    .quiz-panel{
       background:white;
       border:1px solid var(--border);
       border-radius:22px;
       box-shadow:var(--shadow);
-      padding:34px;
+      padding:28px;
+      margin-bottom:24px;
     }
 
-    .quiz-section h2{
-      margin:0 0 14px;
-      font-size:1.7rem;
+    .quiz-panel h2{
+      margin:0 0 12px;
+      font-size:1.55rem;
     }
 
-    .quiz-section p{
+    .quiz-panel p{
       margin:0 0 14px;
       line-height:1.75;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .info-card{
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:linear-gradient(180deg,#ffffff 0%, #f8fbff 100%);
+      padding:18px;
+    }
+
+    .info-card h3{
+      margin:0 0 8px;
+      font-size:1rem;
     }
 
     .question-card{
       border:1px solid var(--border);
       border-radius:18px;
-      padding:24px;
       background:linear-gradient(180deg,#ffffff 0%, #f8fbff 100%);
-      box-shadow:var(--shadow);
+      padding:22px;
+      margin-bottom:18px;
     }
 
-    .question-card + .question-card{
-      margin-top:20px;
+    .question-top{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:12px;
     }
 
     .question-number{
-      display:inline-flex;
+      min-width:40px;
+      height:40px;
+      border-radius:999px;
+      display:flex;
       align-items:center;
       justify-content:center;
-      width:42px;
-      height:42px;
-      border-radius:999px;
+      font-weight:800;
       background:#dbeafe;
       color:#1d4ed8;
-      font-weight:800;
-      margin-bottom:14px;
       border:1px solid rgba(29,78,216,.10);
     }
 
     .question-title{
-      margin:0 0 14px;
-      font-size:1.08rem;
-      line-height:1.6;
+      margin:0;
+      font-size:1.04rem;
+      line-height:1.65;
       color:#0f172a;
     }
 
-    .alternatives{
+    .options{
       display:grid;
       gap:10px;
-      margin-top:10px;
+      margin-top:12px;
     }
 
-    .alternative{
+    .option{
       border:1px solid var(--border);
       border-radius:14px;
-      padding:12px 14px;
-      background:#ffffff;
-      color:#334155;
-      line-height:1.6;
+      background:white;
+      transition:.18s ease;
     }
 
-    .answer-box{
-      margin-top:16px;
-      border-left:5px solid #22c55e;
+    .option:hover{
+      border-color:#93c5fd;
+      box-shadow:0 8px 18px rgba(37,99,235,.08);
+    }
+
+    .option label{
+      display:block;
+      padding:12px 14px;
+      cursor:pointer;
+      line-height:1.6;
+      color:#334155;
+    }
+
+    .option input[type="radio"]{
+      margin-right:10px;
+      transform:scale(1.05);
+      accent-color:#2563eb;
+    }
+
+    .option.selected{
+      background:#eff6ff;
+      border-color:#60a5fa;
+    }
+
+    .option.correct{
       background:#f0fdf4;
+      border-color:#22c55e;
+    }
+
+    .option.incorrect{
+      background:#fef2f2;
+      border-color:#ef4444;
+    }
+
+    .solution{
+      display:none;
+      margin-top:16px;
       padding:14px 16px;
       border-radius:12px;
+      border-left:5px solid #22c55e;
+      background:#f0fdf4;
+      line-height:1.7;
+      color:#14532d;
     }
 
-    .formula-box{
-      margin-top:14px;
-      background:#081633;
-      color:#eef4ff;
-      border-radius:16px;
+    .solution.error{
+      border-left-color:#ef4444;
+      background:#fef2f2;
+      color:#7f1d1d;
+    }
+
+    .toolbar{
+      position:sticky;
+      bottom:16px;
+      z-index:10;
+      margin-top:20px;
+    }
+
+    .toolbar-inner{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      background:white;
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow:0 18px 40px rgba(15,23,42,.12);
       padding:16px 18px;
-      font-family:Consolas, "Courier New", monospace;
-      line-height:1.8;
-      overflow:auto;
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+    }
+
+    .toolbar-text{
+      color:#334155;
+      font-size:.97rem;
+    }
+
+    .btn-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:none;
+      border-radius:12px;
+      padding:12px 16px;
+      font-size:.95rem;
+      font-weight:700;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .btn-primary{
+      background:#2563eb;
+      color:white;
+    }
+
+    .btn-primary:hover{
+      background:#1d4ed8;
+    }
+
+    .btn-secondary{
+      background:#e2e8f0;
+      color:#0f172a;
+    }
+
+    .btn-secondary:hover{
+      background:#cbd5e1;
+    }
+
+    .results-box{
+      display:none;
+      margin-top:18px;
+      border-left:5px solid #2563eb;
+      background:#eff6ff;
+      border-radius:12px;
+      padding:16px 18px;
+      color:#1e3a8a;
+      line-height:1.7;
+      font-weight:700;
     }
 
     .tag-row{
       display:flex;
       flex-wrap:wrap;
       gap:10px;
-      margin:16px 0 0;
+      margin-top:14px;
     }
 
     .tag{
@@ -183,388 +263,472 @@
       border:1px solid rgba(15,23,42,.08);
     }
 
-    .intro-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
-      gap:22px;
-      margin-top:18px;
-    }
-
-    .intro-card{
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:22px;
-      background:linear-gradient(180deg,#ffffff 0%, #f8fbff 100%);
-      box-shadow:var(--shadow);
-    }
-
-    .intro-card h3{
-      margin:0 0 10px;
-      font-size:1.02rem;
-    }
-
     footer{
-      max-width:1400px;
-      margin:0 auto 50px;
+      max-width:1200px;
+      margin:0 auto 40px;
       padding:0 24px;
-      color:#475569;
+      color:#64748b;
       font-size:.95rem;
-    }
-
-    @media (max-width: 1100px){
-      .quiz-layout{
-        grid-template-columns:1fr;
-      }
-
-      .quiz-toc{
-        position:relative;
-        top:auto;
-      }
     }
   </style>
 </head>
 <body>
-  <header class="quiz-hero">
-    <div class="quiz-wrap">
-      <h1>Preguntas de Repaso</h1>
-      <p>
-        Set de 20 preguntas nuevas de alternativa sobre preprocesamiento y aprendizaje no supervisado.
-        Incluye teoría y algunos ejercicios simples de cálculo para practicar antes de una evaluación.
-      </p>
-    </div>
+  <header class="hero-lite">
+    <h1>Formulario de Repaso</h1>
+    <p>
+      Selecciona la alternativa que consideres correcta en cada pregunta. Al presionar
+      <strong>Enviar respuestas</strong>, se mostrará la solución de cada ejercicio y el puntaje total obtenido.
+    </p>
   </header>
 
-  <div class="quiz-layout">
-    <aside class="quiz-toc">
-      <h2>Índice</h2>
-      <ul>
-        <li><a href="#intro">1. Instrucciones</a></li>
-        <li><a href="#preproc">2. Preprocesamiento</a></li>
-        <li><a href="#nosup">3. No supervisado</a></li>
-        <li><a href="#clustering">4. Clustering</a></li>
-        <li><a href="#reglas">5. Reglas de asociación</a></li>
-      </ul>
-    </aside>
+  <div class="quiz-container">
+    <div class="quiz-panel">
+      <h2>Preprocesamiento y Aprendizaje No Supervisado</h2>
+      <p>
+        Este formulario incluye preguntas nuevas y algo más exigentes sobre:
+        tipos de datos, limpieza, escalamiento, normalización, discretización, distancias,
+        clustering, K-Means, DBSCAN, reglas de asociación, Apriori, métricas y reducción de dimensionalidad.
+      </p>
 
-    <main class="quiz-main">
-      <section id="intro" class="quiz-section">
-        <h2>1. Instrucciones</h2>
-        <p>
-          Estas preguntas fueron construidas como ejercicios nuevos, tomando como referencia los temas vistos:
-          <strong>preprocesamiento, tipos de datos, distancias, clustering, K-Means, DBSCAN, reglas de asociación,
-          Apriori y métricas de validación</strong>.
-        </p>
-        <div class="intro-grid">
-          <div class="intro-card">
-            <h3>Formato</h3>
-            <p>20 preguntas de alternativa, mezclando teoría y cálculo simple.</p>
-          </div>
-          <div class="intro-card">
-            <h3>Enfoque</h3>
-            <p>Repaso conceptual, comprensión de algoritmos y ejercicios parecidos a los vistos en clases.</p>
-          </div>
-          <div class="intro-card">
-            <h3>Sugerencia</h3>
-            <p>Intenta responder primero por tu cuenta y revisa la respuesta solo al final de cada pregunta.</p>
-          </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>Formato</h3>
+          <p>20 preguntas de alternativa.</p>
         </div>
-        <div class="tag-row">
-          <span class="tag">Preprocesamiento</span>
-          <span class="tag">No supervisado</span>
-          <span class="tag">Clustering</span>
-          <span class="tag">Apriori</span>
-          <span class="tag">Métricas</span>
+        <div class="info-card">
+          <h3>Dificultad</h3>
+          <p>Mayor énfasis en comprensión conceptual y aplicación.</p>
         </div>
-      </section>
+        <div class="info-card">
+          <h3>Lógica</h3>
+          <p>Primero respondes, luego el sistema muestra correcciones y puntaje.</p>
+        </div>
+      </div>
 
-      <section id="preproc" class="quiz-section">
-        <h2>2. Preguntas de preprocesamiento</h2>
+      <div class="tag-row">
+        <span class="tag">Preprocesamiento</span>
+        <span class="tag">Clustering</span>
+        <span class="tag">K-Means</span>
+        <span class="tag">DBSCAN</span>
+        <span class="tag">Apriori</span>
+        <span class="tag">PCA / FA</span>
+      </div>
 
-        <article class="question-card">
+      <div id="resultsBox" class="results-box"></div>
+    </div>
+
+    <form id="quizForm">
+      <!-- 1 -->
+      <article class="question-card" data-correct="C">
+        <div class="question-top">
           <div class="question-number">1</div>
-          <h3 class="question-title">¿Cuál es el objetivo principal del preprocesamiento de datos?</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Aumentar artificialmente el tamaño del dataset</div>
-            <div class="alternative">B) Preparar y mejorar la calidad de los datos antes del análisis o modelamiento</div>
-            <div class="alternative">C) Reemplazar el algoritmo de machine learning</div>
-            <div class="alternative">D) Generar automáticamente las conclusiones del estudio</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
+          <h3 class="question-title">Si una variable contiene textos libres escritos por usuarios, como descripciones de reclamos o comentarios, ¿qué clasificación es la más adecuada para esos datos?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q1" value="A">A) Datos estructurados, porque se pueden guardar en una tabla</label></div>
+          <div class="option"><label><input type="radio" name="q1" value="B">B) Datos semiestructurados, porque cada texto tiene palabras</label></div>
+          <div class="option"><label><input type="radio" name="q1" value="C">C) Datos no estructurados, porque no siguen un esquema rígido de columnas con significado fijo</label></div>
+          <div class="option"><label><input type="radio" name="q1" value="D">D) Datos discretos, porque cada comentario cuenta como una unidad</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>C</strong>. Los textos libres se consideran no estructurados porque no siguen un formato tabular rígido con atributos estables por columna.</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 2 -->
+      <article class="question-card" data-correct="D">
+        <div class="question-top">
           <div class="question-number">2</div>
-          <h3 class="question-title">¿Cuál de las siguientes opciones corresponde a un dato semiestructurado?</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Un archivo CSV con columnas fijas</div>
-            <div class="alternative">B) Un archivo JSON</div>
-            <div class="alternative">C) Una fotografía</div>
-            <div class="alternative">D) Un audio MP3</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
+          <h3 class="question-title">¿Cuál de las siguientes combinaciones de tipo de variable está correctamente clasificada?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q2" value="A">A) Cantidad de hijos → continua; temperatura → discreta</label></div>
+          <div class="option"><label><input type="radio" name="q2" value="B">B) Nivel de satisfacción → nominal; carrera → ordinal</label></div>
+          <div class="option"><label><input type="radio" name="q2" value="C">C) Licencia válida (Sí/No) → ordinal; ingreso → nominal</label></div>
+          <div class="option"><label><input type="radio" name="q2" value="D">D) Cantidad de cursos aprobados → discreta; velocidad promedio → continua</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>D</strong>. La cantidad de cursos aprobados es contable y entera, mientras que la velocidad promedio puede tomar valores reales.</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 3 -->
+      <article class="question-card" data-correct="B">
+        <div class="question-top">
           <div class="question-number">3</div>
-          <h3 class="question-title">Si una variable representa la “cantidad de hijos”, ¿qué tipo de variable es?</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Numérica continua</div>
-            <div class="alternative">B) Numérica discreta</div>
-            <div class="alternative">C) Categórica nominal</div>
-            <div class="alternative">D) Categórica ordinal</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
+          <h3 class="question-title">Una diferencia importante entre escalamiento y normalización Min-Max es que:</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q3" value="A">A) Escalar elimina outliers y normalizar no</label></div>
+          <div class="option"><label><input type="radio" name="q3" value="B">B) La normalización Min-Max lleva usualmente los valores a [0,1], mientras que “escalar” es una idea más general de ajustar magnitudes</label></div>
+          <div class="option"><label><input type="radio" name="q3" value="C">C) Normalizar sirve solo para variables categóricas</label></div>
+          <div class="option"><label><input type="radio" name="q3" value="D">D) Escalar siempre deja media 0 y desviación 1</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>B</strong>. Escalar es el concepto general de ajustar magnitudes; Min-Max es una forma específica de llevar datos a un rango, normalmente [0,1].</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 4 -->
+      <article class="question-card" data-correct="A">
+        <div class="question-top">
           <div class="question-number">4</div>
-          <h3 class="question-title">La variable “nivel de satisfacción: bajo, medio, alto” corresponde a:</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Numérica continua</div>
-            <div class="alternative">B) Categórica nominal</div>
-            <div class="alternative">C) Categórica ordinal</div>
-            <div class="alternative">D) Numérica discreta</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> C</div>
-        </article>
+          <h3 class="question-title">Si una variable fue normalizada con Min-Max usando rango original [20, 80] y el valor normalizado obtenido fue 0.25, ¿cuál era el valor original?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q4" value="A">A) 35</label></div>
+          <div class="option"><label><input type="radio" name="q4" value="B">B) 30</label></div>
+          <div class="option"><label><input type="radio" name="q4" value="C">C) 40</label></div>
+          <div class="option"><label><input type="radio" name="q4" value="D">D) 45</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>A</strong>. Con Min-Max: x = x_norm*(x_max-x_min)+x_min = 0.25*(80-20)+20 = 15+20 = 35.</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 5 -->
+      <article class="question-card" data-correct="C">
+        <div class="question-top">
           <div class="question-number">5</div>
-          <h3 class="question-title">¿Qué acción es razonable frente a valores duplicados en un dataset?</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Mantenerlos siempre, sin revisión</div>
-            <div class="alternative">B) Revisarlos y eliminarlos si realmente representan registros repetidos</div>
-            <div class="alternative">C) Convertirlos automáticamente en outliers</div>
-            <div class="alternative">D) Reemplazarlos por la media</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
+          <h3 class="question-title">¿Cuál de las siguientes afirmaciones sobre outliers es la más correcta?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q5" value="A">A) Todo valor alto es automáticamente un outlier</label></div>
+          <div class="option"><label><input type="radio" name="q5" value="B">B) Un outlier siempre debe eliminarse sin revisión</label></div>
+          <div class="option"><label><input type="radio" name="q5" value="C">C) Un outlier es un valor que se aleja del patrón general y puede analizarse con criterios como Z-score o IQR</label></div>
+          <div class="option"><label><input type="radio" name="q5" value="D">D) Solo existen en variables categóricas</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>C</strong>. La detección formal de valores atípicos suele apoyarse en medidas como Z-score o rango intercuartílico (IQR).</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 6 -->
+      <article class="question-card" data-correct="D">
+        <div class="question-top">
           <div class="question-number">6</div>
-          <h3 class="question-title">¿Qué describe mejor a un outlier?</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Un dato categórico sin orden</div>
-            <div class="alternative">B) Un valor muy alejado del comportamiento general de los datos</div>
-            <div class="alternative">C) Una variable transformada con normalización</div>
-            <div class="alternative">D) Un registro duplicado</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
+          <h3 class="question-title">¿Cuál es la distancia de Hamming entre “perla” y “pierna”?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q6" value="A">A) No se puede calcular porque no tienen el mismo largo</label></div>
+          <div class="option"><label><input type="radio" name="q6" value="B">B) 1</label></div>
+          <div class="option"><label><input type="radio" name="q6" value="C">C) 2</label></div>
+          <div class="option"><label><input type="radio" name="q6" value="D">D) No corresponde usar Hamming porque las cadenas tienen distinta longitud</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>D</strong>. La distancia de Hamming requiere cadenas del mismo largo; si la longitud difiere, no corresponde aplicarla directamente.</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 7 -->
+      <article class="question-card" data-correct="B">
+        <div class="question-top">
           <div class="question-number">7</div>
-          <h3 class="question-title">La discretización sirve principalmente para:</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Convertir una variable continua en intervalos o categorías</div>
-            <div class="alternative">B) Detectar valores faltantes</div>
-            <div class="alternative">C) Estandarizar a media cero</div>
-            <div class="alternative">D) Eliminar ruido textual</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> A</div>
-        </article>
+          <h3 class="question-title">Si queremos transformar “canto” en “cuento”, ¿cuál es la distancia de Levenshtein mínima?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q7" value="A">A) 1</label></div>
+          <div class="option"><label><input type="radio" name="q7" value="B">B) 2</label></div>
+          <div class="option"><label><input type="radio" name="q7" value="C">C) 3</label></div>
+          <div class="option"><label><input type="radio" name="q7" value="D">D) 4</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>B</strong>. Una forma es: insertar “u” después de la c y sustituir “a” por “e”; se logra en 2 operaciones.</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 8 -->
+      <article class="question-card" data-correct="A">
+        <div class="question-top">
           <div class="question-number">8</div>
-          <h3 class="question-title">Si una variable ya fue normalizada con Min-Max al rango [0,1], ¿cuál de estas afirmaciones es correcta?</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Ahora su media necesariamente es 0</div>
-            <div class="alternative">B) Sus valores quedan en una escala comparable con otras variables normalizadas</div>
-            <div class="alternative">C) Ya no puede tener outliers</div>
-            <div class="alternative">D) Se vuelve categórica</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
+          <h3 class="question-title">¿Qué describe mejor al aprendizaje no supervisado?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q8" value="A">A) Busca patrones o estructuras en los datos sin una variable objetivo conocida</label></div>
+          <div class="option"><label><input type="radio" name="q8" value="B">B) Necesita siempre etiquetas para aprender</label></div>
+          <div class="option"><label><input type="radio" name="q8" value="C">C) Solo puede trabajar con texto</label></div>
+          <div class="option"><label><input type="radio" name="q8" value="D">D) Es equivalente a la regresión lineal</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>A</strong>. El aprendizaje no supervisado trabaja sin variable objetivo y busca agrupaciones, relaciones o estructuras ocultas.</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 9 -->
+      <article class="question-card" data-correct="C">
+        <div class="question-top">
           <div class="question-number">9</div>
-          <h3 class="question-title">Si un valor original es 40, con rango mínimo 10 y máximo 70, ¿cuál es su valor normalizado con Min-Max?</h3>
-          <div class="formula-box">
-x_norm = (x - x_min) / (x_max - x_min)
+          <h3 class="question-title">¿Qué situación favorece más el uso de K-Means?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q9" value="A">A) Clusters con formas muy irregulares y abundante ruido</label></div>
+          <div class="option"><label><input type="radio" name="q9" value="B">B) Datos categóricos sin codificación numérica</label></div>
+          <div class="option"><label><input type="radio" name="q9" value="C">C) Grupos relativamente compactos y variables en escalas comparables</label></div>
+          <div class="option"><label><input type="radio" name="q9" value="D">D) Datos donde se desea detectar explícitamente puntos de ruido</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>C</strong>. K-Means suele funcionar mejor con clusters compactos y cuando las variables han sido escaladas adecuadamente.</div>
+      </article>
 
-x_norm = (40 - 10) / (70 - 10)
-x_norm = 30 / 60
-x_norm = 0.5
-          </div>
-          <div class="alternatives">
-            <div class="alternative">A) 0.25</div>
-            <div class="alternative">B) 0.40</div>
-            <div class="alternative">C) 0.50</div>
-            <div class="alternative">D) 0.75</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> C</div>
-        </article>
-
-        <article class="question-card">
+      <!-- 10 -->
+      <article class="question-card" data-correct="D">
+        <div class="question-top">
           <div class="question-number">10</div>
-          <h3 class="question-title">¿Cuál es la distancia de Hamming entre “carta” y “costa”?</h3>
-          <div class="formula-box">
-c = c
-a ≠ o
-r ≠ s
-t = t
-a = a
+          <h3 class="question-title">En K-Means, si un cluster contiene los puntos (2,2), (4,4) y (6,8), ¿cuál es su centroide?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q10" value="A">A) (4,4)</label></div>
+          <div class="option"><label><input type="radio" name="q10" value="B">B) (4,5)</label></div>
+          <div class="option"><label><input type="radio" name="q10" value="C">C) (3,4.5)</label></div>
+          <div class="option"><label><input type="radio" name="q10" value="D">D) (4, 14/3)</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>D</strong>. El centroide es el promedio coordenada a coordenada: x=(2+4+6)/3=4, y=(2+4+8)/3=14/3≈4.67.</div>
+      </article>
 
-Cambian 2 posiciones
-          </div>
-          <div class="alternatives">
-            <div class="alternative">A) 1</div>
-            <div class="alternative">B) 2</div>
-            <div class="alternative">C) 3</div>
-            <div class="alternative">D) 4</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
-      </section>
-
-      <section id="nosup" class="quiz-section">
-        <h2>3. Preguntas de no supervisado</h2>
-
-        <article class="question-card">
+      <!-- 11 -->
+      <article class="question-card" data-correct="B">
+        <div class="question-top">
           <div class="question-number">11</div>
-          <h3 class="question-title">¿Qué caracteriza al aprendizaje no supervisado?</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Trabaja con una variable objetivo conocida</div>
-            <div class="alternative">B) Descubre patrones o estructuras sin etiquetas previas</div>
-            <div class="alternative">C) Solo se usa en clasificación</div>
-            <div class="alternative">D) Requiere siempre una fase de entrenamiento con respuestas correctas</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
+          <h3 class="question-title">¿Qué afirma correctamente sobre DBSCAN?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q11" value="A">A) Necesita definir K antes de comenzar</label></div>
+          <div class="option"><label><input type="radio" name="q11" value="B">B) Agrupa por densidad y puede etiquetar observaciones como ruido</label></div>
+          <div class="option"><label><input type="radio" name="q11" value="C">C) Recalcula centroides en cada iteración</label></div>
+          <div class="option"><label><input type="radio" name="q11" value="D">D) Solo funciona si todos los clusters son esféricos</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>B</strong>. DBSCAN se basa en densidad, no en centroides, y puede detectar puntos de ruido u outliers.</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 12 -->
+      <article class="question-card" data-correct="A">
+        <div class="question-top">
           <div class="question-number">12</div>
-          <h3 class="question-title">¿Qué busca principalmente la reducción de dimensionalidad?</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Aumentar la cantidad de variables</div>
-            <div class="alternative">B) Reducir variables intentando conservar la mayor información posible</div>
-            <div class="alternative">C) Reemplazar el preprocesamiento</div>
-            <div class="alternative">D) Convertir texto en números</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
+          <h3 class="question-title">Si en DBSCAN aumentas demasiado epsilon manteniendo el resto constante, ¿qué riesgo aparece con mayor probabilidad?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q12" value="A">A) Que clusters distintos terminen fusionados en uno más grande</label></div>
+          <div class="option"><label><input type="radio" name="q12" value="B">B) Que todos los puntos sean ruido necesariamente</label></div>
+          <div class="option"><label><input type="radio" name="q12" value="C">C) Que el algoritmo se convierta en K-Means</label></div>
+          <div class="option"><label><input type="radio" name="q12" value="D">D) Que deje de usar distancias</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>A</strong>. Un epsilon demasiado grande hace que puntos de regiones separadas queden conectados por vecindad y se unan clusters.</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 13 -->
+      <article class="question-card" data-correct="D">
+        <div class="question-top">
           <div class="question-number">13</div>
-          <h3 class="question-title">¿Cuál de estas afirmaciones describe mejor a PCA?</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Elimina filas duplicadas del dataset</div>
-            <div class="alternative">B) Crea componentes que resumen la mayor variabilidad de los datos</div>
-            <div class="alternative">C) Detecta automáticamente ruido en texto</div>
-            <div class="alternative">D) Genera reglas del tipo X → Y</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
-      </section>
+          <h3 class="question-title">¿Qué enunciado diferencia mejor clustering jerárquico de K-Means?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q13" value="A">A) El jerárquico necesita siempre una variable objetivo</label></div>
+          <div class="option"><label><input type="radio" name="q13" value="B">B) K-Means construye dendrogramas y el jerárquico no</label></div>
+          <div class="option"><label><input type="radio" name="q13" value="C">C) El jerárquico solo sirve para dos variables</label></div>
+          <div class="option"><label><input type="radio" name="q13" value="D">D) El jerárquico permite observar agrupaciones a distintos niveles mediante una estructura tipo árbol</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>D</strong>. El clustering jerárquico construye una estructura por niveles, usualmente representada como dendrograma.</div>
+      </article>
 
-      <section id="clustering" class="quiz-section">
-        <h2>4. Preguntas de clustering</h2>
-
-        <article class="question-card">
+      <!-- 14 -->
+      <article class="question-card" data-correct="C">
+        <div class="question-top">
           <div class="question-number">14</div>
-          <h3 class="question-title">¿Qué es clustering?</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Un proceso que agrupa observaciones similares en clusters</div>
-            <div class="alternative">B) Un método para calcular probabilidades condicionales</div>
-            <div class="alternative">C) Una forma de convertir variables categóricas a numéricas</div>
-            <div class="alternative">D) Una técnica para eliminar valores faltantes</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> A</div>
-        </article>
+          <h3 class="question-title">En una tabla One-Hot Encoding para reglas de asociación, ¿qué representa el valor 1?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q14" value="A">A) Que el ítem es el más frecuente</label></div>
+          <div class="option"><label><input type="radio" name="q14" value="B">B) Que el ítem pertenece a un cluster</label></div>
+          <div class="option"><label><input type="radio" name="q14" value="C">C) Que el ítem aparece en esa transacción</label></div>
+          <div class="option"><label><input type="radio" name="q14" value="D">D) Que el ítem tiene lift mayor que 1</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>C</strong>. En One-Hot Encoding, 1 indica presencia del ítem en la transacción y 0 indica ausencia.</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 15 -->
+      <article class="question-card" data-correct="B">
+        <div class="question-top">
           <div class="question-number">15</div>
-          <h3 class="question-title">Si A = (2,1) y B = (5,5), ¿cuál es la distancia euclidiana entre ellos?</h3>
-          <div class="formula-box">
-d(A,B) = √((5-2)^2 + (5-1)^2)
-d(A,B) = √(3^2 + 4^2)
-d(A,B) = √25
-d(A,B) = 5
-          </div>
-          <div class="alternatives">
-            <div class="alternative">A) 4</div>
-            <div class="alternative">B) 5</div>
-            <div class="alternative">C) 6</div>
-            <div class="alternative">D) 7</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
+          <h3 class="question-title">Si un itemset aparece en 6 de 15 transacciones, ¿cuál es su soporte?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q15" value="A">A) 0.30</label></div>
+          <div class="option"><label><input type="radio" name="q15" value="B">B) 0.40</label></div>
+          <div class="option"><label><input type="radio" name="q15" value="C">C) 0.60</label></div>
+          <div class="option"><label><input type="radio" name="q15" value="D">D) 6.00</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>B</strong>. El soporte es frecuencia relativa: 6/15 = 0.40.</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 16 -->
+      <article class="question-card" data-correct="A">
+        <div class="question-top">
           <div class="question-number">16</div>
-          <h3 class="question-title">¿Qué representa K en K-Means?</h3>
-          <div class="alternatives">
-            <div class="alternative">A) La cantidad de iteraciones</div>
-            <div class="alternative">B) La cantidad de clusters a formar</div>
-            <div class="alternative">C) La cantidad de variables del dataset</div>
-            <div class="alternative">D) El radio de vecindad</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
+          <h3 class="question-title">Si Support(X)=0.5, Support(Y)=0.4 y Support(X,Y)=0.2, entonces la confidence de X → Y es:</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q16" value="A">A) 0.4</label></div>
+          <div class="option"><label><input type="radio" name="q16" value="B">B) 0.5</label></div>
+          <div class="option"><label><input type="radio" name="q16" value="C">C) 0.8</label></div>
+          <div class="option"><label><input type="radio" name="q16" value="D">D) 1.25</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>A</strong>. Confidence(X→Y)=Support(X,Y)/Support(X)=0.2/0.5=0.4.</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 17 -->
+      <article class="question-card" data-correct="C">
+        <div class="question-top">
           <div class="question-number">17</div>
-          <h3 class="question-title">Después de asignar cada punto al centroide más cercano en K-Means, ¿qué hace el algoritmo?</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Calcula support y confidence</div>
-            <div class="alternative">B) Recalcula los centroides usando el promedio de los puntos asignados</div>
-            <div class="alternative">C) Elimina los puntos border</div>
-            <div class="alternative">D) Construye un dendrograma</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
+          <h3 class="question-title">Con los mismos valores Support(X)=0.5, Support(Y)=0.4 y Support(X,Y)=0.2, el lift de X → Y es:</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q17" value="A">A) 0.4</label></div>
+          <div class="option"><label><input type="radio" name="q17" value="B">B) 0.8</label></div>
+          <div class="option"><label><input type="radio" name="q17" value="C">C) 1.0</label></div>
+          <div class="option"><label><input type="radio" name="q17" value="D">D) 1.25</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>C</strong>. Lift = 0.2 / (0.5*0.4) = 0.2 / 0.2 = 1. Un lift de 1 indica independencia.</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 18 -->
+      <article class="question-card" data-correct="A">
+        <div class="question-top">
           <div class="question-number">18</div>
-          <h3 class="question-title">En DBSCAN, un punto core es aquel que:</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Está más cerca del origen</div>
-            <div class="alternative">B) Tiene suficientes vecinos dentro del radio epsilon</div>
-            <div class="alternative">C) Nunca pertenece a un cluster</div>
-            <div class="alternative">D) Solo aparece si eps es cero</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
+          <h3 class="question-title">¿Qué describe mejor al pruning en Apriori?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q18" value="A">A) Eliminar combinaciones que no tiene sentido seguir evaluando porque alguno de sus subconjuntos ya no es frecuente</label></div>
+          <div class="option"><label><input type="radio" name="q18" value="B">B) Recalcular soportes con distancia euclidiana</label></div>
+          <div class="option"><label><input type="radio" name="q18" value="C">C) Normalizar la tabla One-Hot</label></div>
+          <div class="option"><label><input type="radio" name="q18" value="D">D) Convertir reglas en clusters</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>A</strong>. El pruning evita revisar itemsets mayores cuando ya se sabe que alguno de sus subconjuntos no cumple el soporte mínimo.</div>
+      </article>
 
-        <article class="question-card">
+      <!-- 19 -->
+      <article class="question-card" data-correct="D">
+        <div class="question-top">
           <div class="question-number">19</div>
-          <h3 class="question-title">Si en DBSCAN el valor de epsilon es demasiado pequeño, ¿qué podría ocurrir?</h3>
-          <div class="alternatives">
-            <div class="alternative">A) Se unirán clusters que deberían estar separados</div>
-            <div class="alternative">B) Aparecerán muchos puntos considerados ruido</div>
-            <div class="alternative">C) Todos los puntos serán core automáticamente</div>
-            <div class="alternative">D) K-Means dejará de funcionar</div>
-          </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
-      </section>
+          <h3 class="question-title">¿Cuál es la diferencia más importante entre PCA y FA?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q19" value="A">A) PCA es supervisado y FA no</label></div>
+          <div class="option"><label><input type="radio" name="q19" value="B">B) FA sirve solo para datos categóricos</label></div>
+          <div class="option"><label><input type="radio" name="q19" value="C">C) PCA elimina duplicados y FA elimina ruido</label></div>
+          <div class="option"><label><input type="radio" name="q19" value="D">D) PCA busca resumir la mayor varianza posible, mientras FA busca factores latentes o comunes detrás de las variables</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>D</strong>. PCA se enfoca en conservar variabilidad; FA intenta modelar factores comunes o latentes que explican la relación entre variables.</div>
+      </article>
 
-      <section id="reglas" class="quiz-section">
-        <h2>5. Preguntas de reglas de asociación</h2>
-
-        <article class="question-card">
+      <!-- 20 -->
+      <article class="question-card" data-correct="B">
+        <div class="question-top">
           <div class="question-number">20</div>
-          <h3 class="question-title">En la siguiente tabla de transacciones, si Pan aparece en 4 de 5 transacciones y Pan con Leche aparece junto en 3 de 5, ¿cuál es la confidence de la regla Pan → Leche?</h3>
-          <div class="formula-box">
-Confidence(Pan → Leche) = Support(Pan, Leche) / Support(Pan)
+          <h3 class="question-title">¿Cuál de las siguientes afirmaciones sobre reducción de dimensionalidad es incorrecta?</h3>
+        </div>
+        <div class="options">
+          <div class="option"><label><input type="radio" name="q20" value="A">A) Puede ayudar a visualizar datos en 2D o 3D</label></div>
+          <div class="option"><label><input type="radio" name="q20" value="B">B) Nunca implica pérdida de información relevante</label></div>
+          <div class="option"><label><input type="radio" name="q20" value="C">C) Puede ayudar a reducir redundancia entre variables</label></div>
+          <div class="option"><label><input type="radio" name="q20" value="D">D) Puede mejorar eficiencia computacional en algunos casos</label></div>
+        </div>
+        <div class="solution">Correcta: <strong>B</strong>. Reducir dimensiones puede implicar pérdida de información; la idea es que esa pérdida sea lo menor posible o aceptable.</div>
+      </article>
 
-Confidence = 0.6 / 0.8
-Confidence = 0.75
+      <div class="toolbar">
+        <div class="toolbar-inner">
+          <div class="toolbar-text">
+            Completa el formulario y luego presiona <strong>Enviar respuestas</strong>.
           </div>
-          <div class="alternatives">
-            <div class="alternative">A) 0.60</div>
-            <div class="alternative">B) 0.75</div>
-            <div class="alternative">C) 0.80</div>
-            <div class="alternative">D) 1.25</div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-secondary" id="resetBtn">Reiniciar</button>
+            <button type="button" class="btn btn-primary" id="submitBtn">Enviar respuestas</button>
           </div>
-          <div class="answer-box"><strong>Respuesta correcta:</strong> B</div>
-        </article>
-      </section>
-    </main>
+        </div>
+      </div>
+    </form>
   </div>
 
   <footer>
-    Página de preguntas de repaso de Ciencia de Datos, by Mx.
+    Formulario de repaso de Ciencia de Datos, by Mx.
   </footer>
+
+  <script>
+    const form = document.getElementById("quizForm");
+    const cards = document.querySelectorAll(".question-card");
+    const submitBtn = document.getElementById("submitBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const resultsBox = document.getElementById("resultsBox");
+
+    function updateSelectedStyles() {
+      cards.forEach((card) => {
+        card.querySelectorAll(".option").forEach((opt) => {
+          opt.classList.remove("selected");
+        });
+
+        const checked = card.querySelector('input[type="radio"]:checked');
+        if (checked) {
+          checked.closest(".option").classList.add("selected");
+        }
+      });
+    }
+
+    form.addEventListener("change", updateSelectedStyles);
+
+    submitBtn.addEventListener("click", () => {
+      let total = cards.length;
+      let correct = 0;
+      let answered = 0;
+
+      cards.forEach((card) => {
+        const expected = card.dataset.correct;
+        const checked = card.querySelector('input[type="radio"]:checked');
+        const solution = card.querySelector(".solution");
+        const options = card.querySelectorAll(".option");
+
+        options.forEach((opt) => {
+          opt.classList.remove("correct", "incorrect");
+        });
+
+        if (checked) {
+          answered++;
+          const selectedValue = checked.value;
+          const selectedOption = checked.closest(".option");
+
+          if (selectedValue === expected) {
+            correct++;
+            selectedOption.classList.add("correct");
+            solution.classList.remove("error");
+          } else {
+            selectedOption.classList.add("incorrect");
+            const expectedInput = card.querySelector(`input[value="${expected}"]`);
+            if (expectedInput) {
+              expectedInput.closest(".option").classList.add("correct");
+            }
+            solution.classList.add("error");
+          }
+        } else {
+          const expectedInput = card.querySelector(`input[value="${expected}"]`);
+          if (expectedInput) {
+            expectedInput.closest(".option").classList.add("correct");
+          }
+          solution.classList.add("error");
+        }
+
+        solution.style.display = "block";
+      });
+
+      resultsBox.style.display = "block";
+      resultsBox.innerHTML = `
+        Puntaje obtenido: <strong>${correct} / ${total}</strong><br>
+        Preguntas respondidas: <strong>${answered}</strong> de <strong>${total}</strong><br>
+        Porcentaje de logro: <strong>${((correct / total) * 100).toFixed(1)}%</strong>
+      `;
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    resetBtn.addEventListener("click", () => {
+      form.reset();
+
+      cards.forEach((card) => {
+        card.querySelectorAll(".option").forEach((opt) => {
+          opt.classList.remove("selected", "correct", "incorrect");
+        });
+
+        const solution = card.querySelector(".solution");
+        solution.style.display = "none";
+        solution.classList.remove("error");
+      });
+
+      resultsBox.style.display = "none";
+      resultsBox.innerHTML = "";
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
 </body>
 </html>
