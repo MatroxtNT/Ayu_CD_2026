@@ -140,6 +140,178 @@
       gap:24px;
       margin-top:18px;
     }
+
+    .category-wrap{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+      gap:22px;
+      margin-top:24px;
+    }
+
+    .category-card{
+      border-radius:22px;
+      padding:24px;
+      color:#0f172a;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      background:white;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .category-card::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      width:100%;
+      height:6px;
+    }
+
+    .category-card.cluster::before{
+      background:linear-gradient(90deg,#2563eb,#38bdf8);
+    }
+
+    .category-card.association::before{
+      background:linear-gradient(90deg,#22c55e,#84cc16);
+    }
+
+    .category-card.reduction::before{
+      background:linear-gradient(90deg,#f59e0b,#fb7185);
+    }
+
+    .category-pill{
+      display:inline-flex;
+      align-items:center;
+      padding:7px 12px;
+      border-radius:999px;
+      font-size:.84rem;
+      font-weight:700;
+      margin-bottom:14px;
+      border:1px solid rgba(15,23,42,.08);
+      background:#f8fafc;
+    }
+
+    .category-card h3{
+      margin:0 0 10px;
+      font-size:1.25rem;
+    }
+
+    .category-card p{
+      margin:0;
+      color:#334155;
+    }
+
+    .section-banner{
+      margin-top:8px;
+      border-radius:20px;
+      padding:22px 24px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      background:
+        radial-gradient(circle at top right, rgba(56,189,248,.18), transparent 25%),
+        linear-gradient(180deg,#ffffff 0%, #f8fbff 100%);
+    }
+
+    .section-banner h2{
+      margin:0 0 8px;
+    }
+
+    .cluster-block{
+      margin-top:24px;
+      padding:24px;
+      border-radius:22px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      background:#ffffff;
+      position:relative;
+    }
+
+    .cluster-block h3{
+      margin-top:0;
+    }
+
+    .cluster-block.cluster-kmeans{
+      border-left:8px solid #2563eb;
+    }
+
+    .cluster-block.cluster-dbscan{
+      border-left:8px solid #14b8a6;
+    }
+
+    .cluster-block.cluster-hier{
+      border-left:8px solid #8b5cf6;
+    }
+
+    .cluster-block.cluster-gb{
+      border-left:8px solid #f59e0b;
+    }
+
+    .cluster-header{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:10px;
+      flex-wrap:wrap;
+    }
+
+    .cluster-label{
+      padding:6px 12px;
+      border-radius:999px;
+      font-size:.82rem;
+      font-weight:700;
+      background:#eef2ff;
+      color:#1e3a8a;
+      border:1px solid rgba(30,58,138,.10);
+    }
+
+    .association-metric-table th{
+      background:#b7b7b7;
+      color:#111827;
+      font-size:1rem;
+    }
+
+    .association-metric-table td strong{
+      font-size:1rem;
+    }
+
+    .simple-prob-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:24px;
+      margin-top:18px;
+      align-items:start;
+    }
+
+    .soft-panel{
+      background:#f8fafc;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:20px;
+    }
+
+    .soft-panel h4{
+      margin:0 0 12px;
+      font-size:1.06rem;
+    }
+
+    .reduction-card{
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:22px;
+      background:linear-gradient(180deg,#ffffff 0%, #fffaf5 100%);
+      box-shadow:var(--shadow);
+    }
+
+    .reduction-card h3{
+      margin-top:0;
+    }
+
+    @media (max-width: 980px){
+      .simple-prob-grid{
+        grid-template-columns:1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -147,9 +319,8 @@
     <div class="wrap">
       <h1>Aprendizaje No Supervisado</h1>
       <p>
-        Contenido explicativo sobre clustering, métricas de distancia, K-Means, DBSCAN
-        y reglas de asociación, con fórmulas, ejemplos desarrollados y código base
-        para estudiar o usar como apoyo en clases.
+        Contenido explicativo sobre clustering, reglas de asociación y reducción de dimensionalidad,
+        con fórmulas, ejemplos desarrollados y una estructura visual que separa claramente cada categoría.
       </p>
     </div>
   </header>
@@ -159,22 +330,22 @@
       <h2>Índice</h2>
       <ul>
         <li><a href="#intro">1. ¿Qué es el aprendizaje no supervisado?</a></li>
-        <li><a href="#clustering">2. Clustering</a></li>
-        <li><a href="#distancias">3. Métricas de distancia</a></li>
-        <li><a href="#euclidiana">3.1 Euclidiana</a></li>
-        <li><a href="#manhattan">3.2 Manhattan</a></li>
-        <li><a href="#chebyshev">3.3 Chebyshev</a></li>
-        <li><a href="#minkowski">3.4 Minkowski</a></li>
-        <li><a href="#kmeans">4. K-Means</a></li>
-        <li><a href="#kmeans-funcionamiento">4.1 Funcionamiento</a></li>
-        <li><a href="#kmeans-codigo">4.2 Código de ejemplo</a></li>
-        <li><a href="#dbscan">5. DBSCAN</a></li>
-        <li><a href="#dbscan-funcionamiento">5.1 Funcionamiento</a></li>
-        <li><a href="#dbscan-codigo">5.2 Código de ejemplo</a></li>
-        <li><a href="#reglas">6. Reglas de asociación</a></li>
-        <li><a href="#ohe">6.1 One-Hot Encoding</a></li>
-        <li><a href="#apriori">6.2 Algoritmo Apriori</a></li>
-        <li><a href="#pruning">6.3 Pruning</a></li>
+        <li><a href="#categorias">2. Categorías principales</a></li>
+        <li><a href="#clustering">3. Clustering</a></li>
+        <li><a href="#distancias">3.1 Métricas de distancia</a></li>
+        <li><a href="#kmeans">3.2 K-Means</a></li>
+        <li><a href="#dbscan">3.3 DBSCAN</a></li>
+        <li><a href="#jerarquico">3.4 Clustering jerárquico</a></li>
+        <li><a href="#gradientboosting">3.5 Gradient Boosting</a></li>
+        <li><a href="#reglas">4. Reglas de asociación</a></li>
+        <li><a href="#probabilidad">4.1 Probabilidad básica y Bayes</a></li>
+        <li><a href="#ohe">4.2 One-Hot Encoding</a></li>
+        <li><a href="#apriori">4.3 Algoritmo Apriori</a></li>
+        <li><a href="#metricas-reglas">4.4 Métricas de validación</a></li>
+        <li><a href="#pruning">4.5 Pruning</a></li>
+        <li><a href="#reduccion">5. Reducción de dimensionalidad</a></li>
+        <li><a href="#pca">5.1 PCA</a></li>
+        <li><a href="#fa">5.2 FA</a></li>
       </ul>
     </aside>
 
@@ -183,28 +354,67 @@
         <h2>1. ¿Qué es el aprendizaje no supervisado?</h2>
         <p>
           El <strong>aprendizaje no supervisado</strong> es una rama del Machine Learning donde los datos
-          no tienen una variable objetivo conocida. Es decir, el algoritmo no recibe una respuesta correcta
-          para comparar, sino que intenta descubrir estructuras, grupos o relaciones ocultas dentro del conjunto de datos.
+          no tienen una variable objetivo conocida. El algoritmo no recibe una respuesta correcta para comparar,
+          sino que busca descubrir estructuras, agrupaciones o relaciones ocultas dentro del conjunto de datos.
         </p>
 
         <div class="intro-grid">
           <div class="card">
             <span class="pill blue">Idea principal</span>
-            <p>Busca patrones sin tener etiquetas conocidas como “aprobado/reprobado” o “fraude/no fraude”.</p>
+            <p>Busca patrones sin etiquetas conocidas como “aprobado/reprobado” o “fraude/no fraude”.</p>
           </div>
           <div class="card">
             <span class="pill green">Usos comunes</span>
             <p>Segmentación de clientes, agrupación de documentos, búsqueda de anomalías y reglas de compra frecuente.</p>
           </div>
           <div class="card">
-            <span class="pill orange">Técnicas vistas aquí</span>
-            <p>Clustering y reglas de asociación, con algoritmos como K-Means, DBSCAN y Apriori.</p>
+            <span class="pill orange">Enfoques vistos</span>
+            <p>Clustering, reglas de asociación y reducción de la dimensionalidad.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="categorias">
+        <div class="section-banner">
+          <h2>2. Categorías principales dentro del contenido</h2>
+          <p>
+            Para que la estructura se entienda mejor, este material separa el aprendizaje no supervisado en
+            tres grandes categorías distintas: <strong>Clustering</strong>, <strong>Reglas de asociación</strong>
+            y <strong>Reducción de dimensionalidad</strong>.
+          </p>
+        </div>
+
+        <div class="category-wrap">
+          <div class="category-card cluster">
+            <span class="category-pill">Categoría 1</span>
+            <h3>Clustering</h3>
+            <p>
+              Agrupa observaciones similares en clusters. Aquí entran K-Means, DBSCAN y clustering jerárquico.
+            </p>
+          </div>
+
+          <div class="category-card association">
+            <span class="category-pill">Categoría 2</span>
+            <h3>Reglas de asociación</h3>
+            <p>
+              Busca relaciones frecuentes entre ítems. Aquí se estudian One-Hot Encoding, Apriori,
+              soporte, confidence, lift, leverage y conviction.
+            </p>
+          </div>
+
+          <div class="category-card reduction">
+            <span class="category-pill">Categoría 3</span>
+            <h3>Reducción de dimensionalidad</h3>
+            <p>
+              Reduce la cantidad de variables intentando conservar la mayor información posible.
+              Aquí se explican PCA y FA.
+            </p>
           </div>
         </div>
       </section>
 
       <section id="clustering">
-        <h2>2. Clustering</h2>
+        <h2>3. Categoría: Clustering</h2>
         <p>
           El <strong>clustering</strong> consiste en agrupar observaciones similares en un mismo clúster.
           La idea es que los datos dentro de un mismo grupo sean parecidos entre sí y diferentes respecto a los de otros grupos.
@@ -218,169 +428,136 @@
         <div class="note-box">
           En clustering no existe una respuesta correcta previa. El algoritmo descubre agrupaciones según la similitud entre puntos.
         </div>
-      </section>
 
-      <section id="distancias">
-        <h2>3. Métricas de distancia</h2>
-        <p>
-          Muchas técnicas de clustering comparan puntos usando una <strong>distancia</strong>.
-          Esa distancia indica qué tan cerca o qué tan lejos están dos observaciones en el espacio.
-        </p>
-
-        <div class="example-box">
-          Supongamos dos puntos:
-          <br><strong>A = (1, 3)</strong>
-          <br><strong>B = (4, 7)</strong>
-        </div>
-
-        <div class="metric-grid">
-          <div class="mini-card" id="euclidiana">
-            <h4>3.1 Distancia Euclidiana</h4>
-            <p>
-              Es la distancia “en línea recta” entre dos puntos. Es la más usada en K-Means.
-            </p>
-            <div class="formula">
-d(A,B) = √((x2 - x1)^2 + (y2 - y1)^2)
-            </div>
-            <p>Reemplazando con A = (1,3) y B = (4,7):</p>
-            <div class="formula">
-d(A,B) = √((4 - 1)^2 + (7 - 3)^2)<br>
-d(A,B) = √(3^2 + 4^2)<br>
-d(A,B) = √(9 + 16)<br>
-d(A,B) = √25<br>
-d(A,B) = 5
-            </div>
-            <div class="note-box">
-              La distancia euclidiana entre A y B es <strong>5</strong>.
-            </div>
+        <section id="distancias" class="cluster-block">
+          <div class="cluster-header">
+            <h3>3.1 Métricas de distancia</h3>
+            <span class="cluster-label">Base matemática del clustering</span>
           </div>
 
-          <div class="mini-card" id="manhattan">
-            <h4>3.2 Distancia Manhattan</h4>
-            <p>
-              Suma los desplazamientos horizontales y verticales. También se conoce como distancia de ciudad o city-block.
-            </p>
-            <div class="formula">
-d(A,B) = |x2 - x1| + |y2 - y1|
-            </div>
-            <p>Reemplazando con A = (1,3) y B = (4,7):</p>
-            <div class="formula">
-d(A,B) = |4 - 1| + |7 - 3|<br>
-d(A,B) = |3| + |4|<br>
-d(A,B) = 3 + 4<br>
-d(A,B) = 7
-            </div>
-            <div class="note-box">
-              La distancia Manhattan entre A y B es <strong>7</strong>.
-            </div>
-          </div>
-
-          <div class="mini-card" id="chebyshev">
-            <h4>3.3 Distancia Chebyshev</h4>
-            <p>
-              Considera solo el mayor desplazamiento entre las dimensiones.
-            </p>
-            <div class="formula">
-d(A,B) = max(|x2 - x1|, |y2 - y1|)
-            </div>
-            <p>Reemplazando con A = (1,3) y B = (4,7):</p>
-            <div class="formula">
-d(A,B) = max(|4 - 1|, |7 - 3|)<br>
-d(A,B) = max(3, 4)<br>
-d(A,B) = 4
-            </div>
-            <div class="note-box">
-              La distancia Chebyshev entre A y B es <strong>4</strong>.
-            </div>
-          </div>
-
-          <div class="mini-card" id="minkowski">
-            <h4>3.4 Distancia Minkowski</h4>
-            <p>
-              Es una generalización de varias distancias. Según el valor de <strong>p</strong>,
-              puede comportarse como Manhattan o Euclidiana.
-            </p>
-            <div class="formula">
-d(A,B) = (|x2 - x1|^p + |y2 - y1|^p)^(1/p)
-            </div>
-            <p>Si usamos p = 3 y A = (1,3), B = (4,7):</p>
-            <div class="formula">
-d(A,B) = (|4 - 1|^3 + |7 - 3|^3)^(1/3)<br>
-d(A,B) = (3^3 + 4^3)^(1/3)<br>
-d(A,B) = (27 + 64)^(1/3)<br>
-d(A,B) = 91^(1/3)<br>
-d(A,B) ≈ 4.50
-            </div>
-            <div class="note-box">
-              La distancia Minkowski con p = 3 entre A y B es aproximadamente <strong>4.50</strong>.
-            </div>
-          </div>
-        </div>
-
-        <div class="warn-box">
-          Si p = 1, Minkowski se transforma en Manhattan. Si p = 2, se transforma en Euclidiana.
-        </div>
-      </section>
-
-      <section id="kmeans">
-        <h2>4. K-Means</h2>
-        <p>
-          <strong>K-Means</strong> es un algoritmo de clustering que agrupa observaciones en <strong>K grupos</strong>,
-          donde K se define previamente. Su objetivo es que los puntos dentro de un mismo cluster queden
-          lo más cerca posible de su centroide.
-        </p>
-
-        <div class="example-box">
-          K-Means trabaja muy bien cuando los grupos tienen una forma relativamente compacta
-          y cuando las variables ya están en escalas comparables.
-        </div>
-
-        <div class="stage-box" id="kmeans-funcionamiento">
-          <h3>4.1 Funcionamiento del algoritmo</h3>
-          <ul class="step-list">
-            <li>Se elige el número de clusters <strong>K</strong>.</li>
-            <li>Se inicializan <strong>K centroides</strong>.</li>
-            <li>Se calcula la distancia de cada punto a cada centroide, normalmente usando distancia euclidiana.</li>
-            <li>Cada punto se asigna al centroide más cercano.</li>
-            <li>Se recalcula cada centroide como el promedio de los puntos asignados a su cluster.</li>
-            <li>Se repite el proceso hasta que las asignaciones dejen de cambiar o se alcance el máximo de iteraciones.</li>
-          </ul>
-
-          <h3>Fórmula de recálculo del centroide</h3>
           <p>
-            Si un cluster tiene n puntos, el centroide se obtiene promediando cada coordenada.
+            Muchas técnicas de clustering comparan puntos usando una <strong>distancia</strong>.
+            Esa distancia indica qué tan cerca o qué tan lejos están dos observaciones en el espacio.
           </p>
-          <div class="formula">
-C = ( (x1 + x2 + ... + xn) / n , (y1 + y2 + ... + yn) / n )
-          </div>
 
           <div class="example-box">
-            <strong>Ejemplo:</strong> si un cluster tiene los puntos (1,3) y (2,4), entonces:
-            <br>C = ((1+2)/2, (3+4)/2)
-            <br>C = (1.5, 3.5)
+            Supongamos dos puntos:
+            <br><strong>A = (1, 3)</strong>
+            <br><strong>B = (4, 7)</strong>
           </div>
 
-          <h3>Ejemplo breve de asignación usando distancia euclidiana</h3>
+          <div class="metric-grid">
+            <div class="mini-card">
+              <h4>Distancia Euclidiana</h4>
+              <p>Es la distancia “en línea recta” entre dos puntos. Es la más usada en K-Means.</p>
+              <div class="formula">
+d(A,B) = √((x2 - x1)^2 + (y2 - y1)^2)
+              </div>
+              <div class="formula">
+d(A,B) = √((4 - 1)^2 + (7 - 3)^2)<br>
+d(A,B) = √(3^2 + 4^2)<br>
+d(A,B) = √25 = 5
+              </div>
+            </div>
+
+            <div class="mini-card">
+              <h4>Distancia Manhattan</h4>
+              <p>Suma los desplazamientos horizontales y verticales.</p>
+              <div class="formula">
+d(A,B) = |x2 - x1| + |y2 - y1|
+              </div>
+              <div class="formula">
+d(A,B) = |4 - 1| + |7 - 3|<br>
+d(A,B) = 3 + 4 = 7
+              </div>
+            </div>
+
+            <div class="mini-card">
+              <h4>Distancia Chebyshev</h4>
+              <p>Considera solo el mayor desplazamiento entre dimensiones.</p>
+              <div class="formula">
+d(A,B) = max(|x2 - x1|, |y2 - y1|)
+              </div>
+              <div class="formula">
+d(A,B) = max(3,4) = 4
+              </div>
+            </div>
+
+            <div class="mini-card">
+              <h4>Distancia Minkowski</h4>
+              <p>Generaliza varias distancias según el valor de p.</p>
+              <div class="formula">
+d(A,B) = (|x2 - x1|^p + |y2 - y1|^p)^(1/p)
+              </div>
+              <div class="formula">
+Si p = 3:<br>
+d(A,B) = (3^3 + 4^3)^(1/3)<br>
+d(A,B) = 91^(1/3) ≈ 4.50
+              </div>
+            </div>
+          </div>
+
+          <div class="warn-box">
+            Si p = 1, Minkowski se transforma en Manhattan. Si p = 2, se transforma en Euclidiana.
+          </div>
+        </section>
+
+        <section id="kmeans" class="cluster-block cluster-kmeans">
+          <div class="cluster-header">
+            <h3>3.2 K-Means</h3>
+            <span class="cluster-label">Clustering basado en centroides</span>
+          </div>
+
           <p>
-            Supongamos un punto <strong>A = (1,3)</strong> y dos centroides:
-            <br><strong>C1 = (2,4)</strong>
-            <br><strong>C2 = (7,3)</strong>
+            <strong>K-Means</strong> agrupa observaciones en <strong>K grupos</strong>, donde K se define previamente.
+            Su objetivo es que los puntos dentro de un mismo cluster queden lo más cerca posible de su centroide.
           </p>
 
-          <div class="formula">
+          <div class="example-box">
+            K-Means funciona especialmente bien cuando los grupos tienen forma relativamente compacta
+            y cuando las variables están en escalas comparables.
+          </div>
+
+          <div class="substage">
+            <h3>Funcionamiento del algoritmo</h3>
+            <ul class="step-list">
+              <li>Se elige el número de clusters <strong>K</strong>.</li>
+              <li>Se inicializan <strong>K centroides</strong>.</li>
+              <li>Se calcula la distancia de cada punto a cada centroide, usualmente con distancia euclidiana.</li>
+              <li>Cada punto se asigna al centroide más cercano.</li>
+              <li>Se recalcula cada centroide como el promedio de los puntos asignados.</li>
+              <li>Se repite el proceso hasta que deje de cambiar la asignación o se alcance el máximo de iteraciones.</li>
+            </ul>
+
+            <h3>Fórmula de recálculo del centroide</h3>
+            <div class="formula">
+C = ( (x1 + x2 + ... + xn) / n , (y1 + y2 + ... + yn) / n )
+            </div>
+
+            <div class="example-box">
+              Si un cluster contiene los puntos (1,3) y (2,4), su centroide es:
+              <br>C = ((1+2)/2, (3+4)/2)
+              <br>C = (1.5, 3.5)
+            </div>
+
+            <h3>Ejemplo breve con distancia euclidiana</h3>
+            <div class="formula">
+A = (1,3)
+C1 = (2,4)
+C2 = (7,3)
+
 d(A,C1) = √((2 - 1)^2 + (4 - 3)^2) = √2 ≈ 1.41
-d(A,C2) = √((7 - 1)^2 + (3 - 3)^2) = √36 = 6
+d(A,C2) = √((7 - 1)^2 + (3 - 3)^2) = 6
+            </div>
+
+            <div class="note-box">
+              Como la distancia a C1 es menor, el punto A se asigna al cluster del centroide C1.
+            </div>
           </div>
 
-          <div class="note-box">
-            Como la distancia a C1 es menor, el punto A se asigna al cluster del centroide C1.
-          </div>
-        </div>
-
-        <div class="stage-box" id="kmeans-codigo">
-          <h3>4.2 Código de ejemplo con Scikit-learn</h3>
-
-          <div class="code-demo">
+          <div class="substage">
+            <h3>Código de ejemplo con Scikit-learn</h3>
+            <div class="code-demo">
 <pre>from sklearn.cluster import KMeans
 
 modelo = KMeans(
@@ -395,105 +572,86 @@ modelo.fit(X)
 
 labels = modelo.labels_
 centroides = modelo.cluster_centers_</pre>
-          </div>
-
-          <h3>¿Qué significa cada hiperparámetro?</h3>
-          <div class="topic-grid">
-            <div class="mini-card">
-              <h4>n_clusters</h4>
-              <p>Es la cantidad de clusters K que se quiere formar.</p>
-            </div>
-            <div class="mini-card">
-              <h4>init</h4>
-              <p>Es la forma en que se inicializan los centroides. “k-means++” suele ser una buena opción.</p>
-            </div>
-            <div class="mini-card">
-              <h4>n_init</h4>
-              <p>Es cuántas veces se ejecuta el algoritmo con distintas inicializaciones y se elige la mejor.</p>
-            </div>
-            <div class="mini-card">
-              <h4>max_iter</h4>
-              <p>Es el máximo de iteraciones permitidas para que el algoritmo converja.</p>
-            </div>
-            <div class="mini-card">
-              <h4>random_state</h4>
-              <p>Sirve para fijar una semilla y obtener resultados reproducibles.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="dbscan">
-        <h2>5. DBSCAN</h2>
-        <p>
-          <strong>DBSCAN</strong> es un algoritmo de clustering basado en densidad.
-          En lugar de buscar centroides, identifica regiones donde hay suficientes puntos cercanos entre sí.
-        </p>
-
-        <div class="example-box">
-          DBSCAN es útil cuando los grupos tienen formas irregulares y también cuando se quiere detectar ruido u outliers.
-        </div>
-
-        <div class="stage-box" id="dbscan-funcionamiento">
-          <h3>5.1 Funcionamiento del algoritmo</h3>
-          <ul class="step-list">
-            <li>El algoritmo toma un punto no visitado.</li>
-            <li>Dibuja alrededor de él una vecindad de radio <strong>epsilon (eps)</strong>.</li>
-            <li>Cuenta cuántos puntos hay dentro de ese radio.</li>
-            <li>Si hay suficientes puntos, el punto se considera <strong>core</strong>.</li>
-            <li>Si no tiene suficientes vecinos, puede ser <strong>border</strong> o <strong>ruido</strong>.</li>
-            <li>Si es core, se crea o expande un cluster usando vecinos conectados por densidad.</li>
-          </ul>
-
-          <h3>Tipos de puntos</h3>
-          <div class="topic-grid">
-            <div class="mini-card">
-              <h4>Punto core</h4>
-              <p>
-                Es un punto que tiene suficientes vecinos dentro de su radio epsilon.
-                Puede iniciar un cluster y también expandirlo.
-              </p>
             </div>
 
-            <div class="mini-card">
-              <h4>Punto border</h4>
-              <p>
-                No cumple MinPts por sí mismo, pero está dentro del radio de un punto core.
-                Pertenece al cluster, pero no lo expande.
-              </p>
-            </div>
-
-            <div class="mini-card">
-              <h4>Ruido</h4>
-              <p>
-                No cumple MinPts y tampoco está conectado a un punto core.
-                Queda fuera de cualquier cluster.
-              </p>
+            <div class="topic-grid">
+              <div class="mini-card">
+                <h4>n_clusters</h4>
+                <p>Cantidad de clusters K que se quiere formar.</p>
+              </div>
+              <div class="mini-card">
+                <h4>init</h4>
+                <p>Forma de inicializar los centroides. “k-means++” suele ser una buena opción.</p>
+              </div>
+              <div class="mini-card">
+                <h4>n_init</h4>
+                <p>Cantidad de inicializaciones probadas antes de elegir la mejor.</p>
+              </div>
+              <div class="mini-card">
+                <h4>max_iter</h4>
+                <p>Máximo de iteraciones permitidas para converger.</p>
+              </div>
+              <div class="mini-card">
+                <h4>random_state</h4>
+                <p>Sirve para fijar una semilla y hacer reproducible el resultado.</p>
+              </div>
             </div>
           </div>
+        </section>
 
-          <h3>¿Para qué sirve epsilon?</h3>
-          <div class="note-box">
-            <strong>Epsilon (eps)</strong> define el radio de vecindad.
-            Es la distancia máxima para considerar que dos puntos están “cerca”.
+        <section id="dbscan" class="cluster-block cluster-dbscan">
+          <div class="cluster-header">
+            <h3>3.3 DBSCAN</h3>
+            <span class="cluster-label">Clustering basado en densidad</span>
           </div>
 
-          <div class="warn-box">
-            Si epsilon es muy pequeño, pueden aparecer muchos puntos como ruido.
-            Si epsilon es muy grande, varios grupos distintos podrían terminar unidos.
-          </div>
-
-          <h3>¿Qué es MinPts?</h3>
           <p>
-            <strong>MinPts</strong> es la cantidad mínima de puntos que debe haber en la vecindad de un punto
-            para que ese punto sea considerado core.
+            <strong>DBSCAN</strong> es un algoritmo de clustering basado en densidad.
+            En lugar de buscar centroides, identifica regiones donde hay suficientes puntos cercanos entre sí.
           </p>
-        </div>
 
-        <div class="stage-box" id="dbscan-codigo">
-          <h3>5.2 Código de ejemplo con Scikit-learn</h3>
+          <div class="example-box">
+            DBSCAN es útil cuando los grupos tienen formas irregulares y también cuando se quiere detectar ruido u outliers.
+          </div>
 
-          <div class="code-demo">
+          <div class="substage">
+            <h3>Funcionamiento del algoritmo</h3>
+            <ul class="step-list">
+              <li>Toma un punto no visitado.</li>
+              <li>Dibuja alrededor de él una vecindad de radio <strong>epsilon (eps)</strong>.</li>
+              <li>Cuenta cuántos puntos hay dentro de ese radio.</li>
+              <li>Si hay suficientes puntos, el punto se considera <strong>core</strong>.</li>
+              <li>Si no, puede ser <strong>border</strong> o <strong>ruido</strong>.</li>
+              <li>Si es core, se crea o expande un cluster usando vecinos conectados por densidad.</li>
+            </ul>
+
+            <div class="topic-grid">
+              <div class="mini-card">
+                <h4>Punto core</h4>
+                <p>Tiene suficientes vecinos dentro de su radio epsilon. Puede iniciar y expandir un cluster.</p>
+              </div>
+              <div class="mini-card">
+                <h4>Punto border</h4>
+                <p>No cumple MinPts por sí mismo, pero está dentro del radio de un punto core.</p>
+              </div>
+              <div class="mini-card">
+                <h4>Ruido</h4>
+                <p>No cumple MinPts y tampoco está conectado a un punto core.</p>
+              </div>
+            </div>
+
+            <div class="note-box">
+              <strong>Epsilon (eps)</strong> define el radio de vecindad. Es la distancia máxima para considerar que dos puntos están cerca.
+            </div>
+
+            <div class="warn-box">
+              Si epsilon es muy pequeño, aparecen muchos puntos como ruido. Si es muy grande, varios clusters distintos pueden unirse.
+            </div>
+          </div>
+
+          <div class="substage">
+            <h3>Código de ejemplo con Scikit-learn</h3>
+            <div class="code-demo">
 <pre>from sklearn.cluster import DBSCAN
 
 modelo = DBSCAN(
@@ -503,28 +661,82 @@ modelo = DBSCAN(
 )
 
 labels = modelo.fit_predict(X)</pre>
+            </div>
+
+            <div class="topic-grid">
+              <div class="mini-card">
+                <h4>eps</h4>
+                <p>Radio de vecindad alrededor de cada punto.</p>
+              </div>
+              <div class="mini-card">
+                <h4>min_samples</h4>
+                <p>Cantidad mínima de puntos para considerar a un punto como core.</p>
+              </div>
+              <div class="mini-card">
+                <h4>metric</h4>
+                <p>Distancia usada para medir cercanía entre puntos, por ejemplo euclidiana.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="jerarquico" class="cluster-block cluster-hier">
+          <div class="cluster-header">
+            <h3>3.4 Clustering jerárquico</h3>
+            <span class="cluster-label">Clustering por niveles</span>
           </div>
 
-          <h3>¿Qué significa cada hiperparámetro?</h3>
+          <p>
+            El <strong>clustering jerárquico</strong> construye una estructura en forma de árbol llamada
+            <strong>dendrograma</strong>. Su idea es unir observaciones parecidas paso a paso
+            o dividir grandes grupos en subgrupos más pequeños.
+          </p>
+
           <div class="topic-grid">
             <div class="mini-card">
-              <h4>eps</h4>
-              <p>Es el radio de vecindad alrededor de cada punto.</p>
+              <h4>Enfoque aglomerativo</h4>
+              <p>Comienza con cada punto como un cluster individual y luego va fusionando los más similares.</p>
             </div>
             <div class="mini-card">
-              <h4>min_samples</h4>
-              <p>Es la cantidad mínima de puntos para considerar a un punto como core.</p>
+              <h4>Enfoque divisivo</h4>
+              <p>Comienza con un gran grupo y va separándolo en subgrupos.</p>
             </div>
             <div class="mini-card">
-              <h4>metric</h4>
-              <p>Es la distancia que se usará para medir cercanía entre puntos, por ejemplo euclidiana.</p>
+              <h4>Ventaja</h4>
+              <p>No obliga a fijar desde el inicio una sola partición; el dendrograma muestra varios niveles de agrupación.</p>
             </div>
           </div>
-        </div>
+
+          <div class="note-box">
+            A diferencia de K-Means, aquí la estructura jerárquica del agrupamiento se puede visualizar de forma más natural.
+          </div>
+        </section>
+
+        <section id="gradientboosting" class="cluster-block cluster-gb">
+          <div class="cluster-header">
+            <h3>3.5 Gradient Boosting</h3>
+            <span class="cluster-label">Aclaración importante</span>
+          </div>
+
+          <p>
+            <strong>Gradient Boosting</strong> no corresponde a clustering ni a aprendizaje no supervisado.
+            En realidad es un método de <strong>aprendizaje supervisado</strong> usado en clasificación y regresión.
+          </p>
+
+          <div class="warn-box">
+            Se incluye aquí solo como aclaración estructural, porque a veces se confunde con otros algoritmos,
+            pero <strong>no forma parte de las técnicas de clustering</strong>.
+          </div>
+
+          <div class="example-box">
+            Su lógica general es combinar varios modelos débiles, usualmente árboles pequeños,
+            para corregir errores progresivamente y construir un modelo final más preciso.
+          </div>
+        </section>
       </section>
 
       <section id="reglas">
-        <h2>6. Reglas de asociación</h2>
+        <h2>4. Categoría: Reglas de asociación</h2>
         <p>
           Las <strong>reglas de asociación</strong> buscan descubrir relaciones frecuentes entre elementos de un conjunto de datos.
           Se usan mucho en análisis de compras, donde interesa saber qué productos suelen aparecer juntos.
@@ -534,198 +746,340 @@ labels = modelo.fit_predict(X)</pre>
           <strong>Ejemplo:</strong> si muchas veces cuando aparece “Pan” también aparece “Leche”,
           se puede generar una regla de asociación entre esos productos.
         </div>
-      </section>
-
-      <section id="ohe">
-        <h2>6.1 One-Hot Encoding</h2>
-        <p>
-          Antes de aplicar Apriori, es común transformar las transacciones a formato <strong>One-Hot Encoding</strong>.
-          Esto consiste en representar cada producto con 1 si aparece en la transacción y 0 si no aparece.
-        </p>
-
-        <h3>Tabla de transacciones original</h3>
-        <table class="compare-table">
-          <thead>
-            <tr>
-              <th>Transacción</th>
-              <th>Productos</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>T1</td>
-              <td>Pan, Leche</td>
-            </tr>
-            <tr>
-              <td>T2</td>
-              <td>Pan, Mantequilla</td>
-            </tr>
-            <tr>
-              <td>T3</td>
-              <td>Leche, Mantequilla</td>
-            </tr>
-            <tr>
-              <td>T4</td>
-              <td>Pan, Leche, Mantequilla</td>
-            </tr>
-            <tr>
-              <td>T5</td>
-              <td>Pan, Leche</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h3>Tabla en One-Hot Encoding</h3>
-        <table class="compare-table">
-          <thead>
-            <tr>
-              <th>Transacción</th>
-              <th>Pan</th>
-              <th>Leche</th>
-              <th>Mantequilla</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>T1</td>
-              <td>1</td>
-              <td>1</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>T2</td>
-              <td>1</td>
-              <td>0</td>
-              <td>1</td>
-            </tr>
-            <tr>
-              <td>T3</td>
-              <td>0</td>
-              <td>1</td>
-              <td>1</td>
-            </tr>
-            <tr>
-              <td>T4</td>
-              <td>1</td>
-              <td>1</td>
-              <td>1</td>
-            </tr>
-            <tr>
-              <td>T5</td>
-              <td>1</td>
-              <td>1</td>
-              <td>0</td>
-            </tr>
-          </tbody>
-        </table>
 
         <div class="note-box">
-          Este formato permite contar fácilmente cuántas veces aparece cada ítem o combinación de ítems.
-        </div>
-      </section>
-
-      <section id="apriori">
-        <h2>6.2 Algoritmo Apriori</h2>
-        <p>
-          <strong>Apriori</strong> busca conjuntos de ítems frecuentes llamados <strong>itemsets</strong>.
-          Parte con ítems individuales y luego construye combinaciones más grandes, filtrando aquellas que no cumplen
-          una frecuencia mínima.
-        </p>
-
-        <div class="example-box">
-          Supongamos <strong>min_support = 0.4</strong>. Como hay 5 transacciones, una combinación debe aparecer
-          al menos en 2 transacciones para ser considerada frecuente.
+          Una regla como <strong>Pan → Leche</strong> indica <strong>co-ocurrencia</strong>, no causalidad.
         </div>
 
-        <h3>Paso 1: calcular soporte de los itemsets de tamaño 1 (k = 1)</h3>
-        <div class="formula">
+        <section id="probabilidad" class="stage-box">
+          <h3>4.1 Probabilidad básica, conjunta, condicional y Bayes</h3>
+
+          <div class="simple-prob-grid">
+            <div>
+              <p>
+                Supongamos que en una población se quiere estudiar una enfermedad mediante un test.
+              </p>
+              <p><strong>Se sabe lo siguiente:</strong></p>
+              <ul class="step-list">
+                <li>El 1% de las personas tiene la enfermedad.</li>
+                <li>Si una persona está enferma, el test sale positivo en el 90% de los casos.</li>
+                <li>En total, el test sale positivo en el 5% de las personas.</li>
+              </ul>
+            </div>
+
+            <div class="soft-panel">
+              <h4>Probabilidad básica</h4>
+              <div class="formula">P(A) = casos favorables / casos totales</div>
+
+              <h4>Probabilidad conjunta</h4>
+              <div class="formula">P(A ∩ B)</div>
+
+              <h4>Probabilidad condicional</h4>
+              <div class="formula">P(B|A) = P(A ∩ B) / P(A)</div>
+
+              <h4>Teorema de Bayes</h4>
+              <div class="formula">P(A|B) = (P(B|A) * P(A)) / P(B)</div>
+            </div>
+          </div>
+
+          <div class="note-box">
+            Estas ideas sirven como base para interpretar soporte, confidence y otras métricas de reglas de asociación.
+          </div>
+        </section>
+
+        <section id="ohe" class="stage-box">
+          <h3>4.2 One-Hot Encoding</h3>
+          <p>
+            Antes de aplicar Apriori, es común transformar las transacciones a formato <strong>One-Hot Encoding</strong>.
+            Esto consiste en representar cada producto con 1 si aparece en la transacción y 0 si no aparece.
+          </p>
+
+          <h3>Tabla de transacciones original</h3>
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Transacción</th>
+                <th>Productos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>T1</td>
+                <td>Pan, Leche</td>
+              </tr>
+              <tr>
+                <td>T2</td>
+                <td>Pan, Mantequilla</td>
+              </tr>
+              <tr>
+                <td>T3</td>
+                <td>Leche, Mantequilla</td>
+              </tr>
+              <tr>
+                <td>T4</td>
+                <td>Pan, Leche, Mantequilla</td>
+              </tr>
+              <tr>
+                <td>T5</td>
+                <td>Pan, Leche</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Tabla en One-Hot Encoding</h3>
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Transacción</th>
+                <th>Pan</th>
+                <th>Leche</th>
+                <th>Mantequilla</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>T1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>T2</td>
+                <td>1</td>
+                <td>0</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>T3</td>
+                <td>0</td>
+                <td>1</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>T4</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>T5</td>
+                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="note-box">
+            Este formato permite contar fácilmente cuántas veces aparece cada ítem o combinación de ítems.
+          </div>
+        </section>
+
+        <section id="apriori" class="stage-box">
+          <h3>4.3 Algoritmo Apriori</h3>
+          <p>
+            <strong>Apriori</strong> busca conjuntos de ítems frecuentes llamados <strong>itemsets</strong>.
+            Parte con ítems individuales y luego construye combinaciones más grandes, filtrando las que no cumplen
+            un soporte mínimo.
+          </p>
+
+          <div class="example-box">
+            Supongamos <strong>min_support = 0.4</strong>. Como hay 5 transacciones, una combinación debe aparecer
+            al menos en 2 transacciones para ser frecuente.
+          </div>
+
+          <h3>Paso 1: itemsets de tamaño 1 (k = 1)</h3>
+          <div class="formula">
 Support(Pan) = 4/5 = 0.8
 Support(Leche) = 4/5 = 0.8
 Support(Mantequilla) = 3/5 = 0.6
-        </div>
+          </div>
 
-        <p>
-          Como todos son mayores o iguales a 0.4, los tres pasan a ser itemsets frecuentes de tamaño 1:
-        </p>
-        <div class="formula">
+          <div class="formula">
 {Pan}
 {Leche}
 {Mantequilla}
-        </div>
+          </div>
 
-        <h3>Paso 2: generar itemsets de tamaño 2 (k = 2)</h3>
-        <div class="formula">
+          <h3>Paso 2: itemsets de tamaño 2 (k = 2)</h3>
+          <div class="formula">
 Support(Pan, Leche) = 3/5 = 0.6
 Support(Pan, Mantequilla) = 2/5 = 0.4
 Support(Leche, Mantequilla) = 2/5 = 0.4
-        </div>
+          </div>
 
-        <p>
-          Como todos cumplen el soporte mínimo, también son frecuentes:
-        </p>
-        <div class="formula">
+          <div class="formula">
 {Pan, Leche}
 {Pan, Mantequilla}
 {Leche, Mantequilla}
-        </div>
+          </div>
 
-        <h3>Paso 3: generar itemsets de tamaño 3 (k = 3)</h3>
-        <p>
-          Se combinan los itemsets frecuentes de tamaño 2 para intentar formar uno de tamaño 3:
-        </p>
-        <div class="formula">
+          <h3>Paso 3: itemsets de tamaño 3 (k = 3)</h3>
+          <div class="formula">
 {Pan, Leche} + {Pan, Mantequilla} → {Pan, Leche, Mantequilla}
-        </div>
-
-        <p>
-          Ahora calculamos su soporte:
-        </p>
-        <div class="formula">
 Support(Pan, Leche, Mantequilla) = 1/5 = 0.2
-        </div>
+          </div>
 
-        <div class="warn-box">
-          Como 0.2 es menor que 0.4, ese itemset no es frecuente y se descarta.
-        </div>
+          <div class="warn-box">
+            Como 0.2 es menor que 0.4, ese itemset no es frecuente y se descarta.
+          </div>
+        </section>
+
+        <section id="metricas-reglas" class="stage-box">
+          <h3>4.4 Métricas de validación / Resultados para Pan y Leche</h3>
+
+          <table class="compare-table association-metric-table">
+            <thead>
+              <tr>
+                <th>Métrica</th>
+                <th>Fórmula</th>
+                <th>Interpretación</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Support</strong></td>
+                <td>
+                  Support(Pan) = P(Pan) = (4/5) = 0.8<br>
+                  Support(Pan → Leche) = P(Pan ∩ Leche) = (3/5) = 0.6
+                </td>
+                <td>Frecuencia dentro del dataset</td>
+              </tr>
+
+              <tr>
+                <td><strong>Confidence</strong></td>
+                <td>
+                  Confidence(Pan → Leche) = Support(Pan → Leche) / Support(Pan)<br>
+                  Confidence = (0.6 / 0.8) = 0.75
+                </td>
+                <td>“Leche ocurre frecuentemente cuando ocurre Pan”</td>
+              </tr>
+
+              <tr>
+                <td><strong>Lift</strong></td>
+                <td>
+                  Lift(Pan → Leche) = Support(Pan → Leche) / (Support(Pan) * Support(Leche))<br>
+                  Lift = (0.6 / (0.8 * 0.8)) = 0.9375
+                </td>
+                <td>Relación negativa leve</td>
+              </tr>
+
+              <tr>
+                <td><strong>Leverage</strong></td>
+                <td>
+                  Leverage(Pan → Leche) = Support(Pan → Leche) - (Support(Pan) * Support(Leche))<br>
+                  Leverage(Pan → Leche) = (0.6 - (0.8 * 0.8)) = -0.04
+                </td>
+                <td>Ocurren menos de lo esperado</td>
+              </tr>
+
+              <tr>
+                <td><strong>Conviction</strong></td>
+                <td>
+                  Conviction(Pan → Leche) = (1 - Support(Leche)) / (1 - Confidence(Pan → Leche))<br>
+                  Conviction(Pan → Leche) = (1 - 0.8) / (1 - 0.75) = 0.8
+                </td>
+                <td>La regla no es fuerte y está cercana a independencia</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="note-box">
+            En este ejemplo, Pan y Leche sí aparecen juntos varias veces, pero las métricas muestran que la relación no es especialmente fuerte.
+          </div>
+        </section>
+
+        <section id="pruning" class="stage-box">
+          <h3>4.5 Pruning</h3>
+          <p>
+            El <strong>pruning</strong> es el proceso de poda usado por Apriori para evitar evaluar combinaciones innecesarias.
+            Si un subconjunto no es frecuente, entonces cualquier conjunto más grande que lo contenga tampoco podrá ser frecuente.
+          </p>
+
+          <div class="example-box">
+            Si {Pan, Mantequilla} no hubiera sido frecuente, entonces no tendría sentido intentar construir
+            {Pan, Leche, Mantequilla}, porque uno de sus subconjuntos ya falló.
+          </div>
+
+          <div class="note-box">
+            Gracias al pruning, Apriori reduce la cantidad de combinaciones a revisar y hace la búsqueda más eficiente.
+          </div>
+        </section>
       </section>
 
-      <section id="pruning">
-        <h2>6.3 Pruning</h2>
+      <section id="reduccion">
+        <h2>5. Categoría: Reducción de dimensionalidad</h2>
         <p>
-          El <strong>pruning</strong> es el proceso de poda usado por Apriori para evitar evaluar combinaciones innecesarias.
-          La idea es simple: si un subconjunto no es frecuente, entonces cualquier conjunto más grande que lo contenga
-          tampoco podrá ser frecuente.
+          La <strong>reducción de dimensionalidad</strong> es una técnica que busca disminuir la cantidad de variables
+          de un conjunto de datos, intentando conservar la mayor cantidad posible de información importante.
         </p>
 
         <div class="example-box">
-          <strong>Ejemplo:</strong> si {Pan, Mantequilla} no hubiera sido frecuente,
-          entonces no tendría sentido intentar construir {Pan, Leche, Mantequilla},
-          porque uno de sus subconjuntos ya falló.
+          Cada atributo puede entenderse como una dimensión. Si un dataset tiene muchas columnas,
+          trabajar con todas puede ser difícil, costoso o redundante.
         </div>
 
-        <div class="note-box">
-          Gracias al pruning, Apriori reduce la cantidad de combinaciones a revisar y hace la búsqueda más eficiente.
+        <div class="topic-grid">
+          <div class="reduction-card" id="pca">
+            <h3>5.1 PCA</h3>
+            <p>
+              <strong>PCA</strong> o <strong>Principal Component Analysis</strong> transforma las variables originales
+              en nuevas variables llamadas <strong>componentes principales</strong>.
+            </p>
+            <p>
+              Estos componentes buscan capturar la mayor varianza posible de los datos usando menos dimensiones.
+            </p>
+
+            <div class="note-box">
+              PCA no elimina simplemente variables: crea nuevas dimensiones que resumen la información original.
+            </div>
+
+            <div class="example-box">
+              Si varias variables están muy relacionadas entre sí, PCA puede condensar esa información
+              en pocos componentes principales.
+            </div>
+          </div>
+
+          <div class="reduction-card" id="fa">
+            <h3>5.2 FA</h3>
+            <p>
+              <strong>FA</strong> o <strong>Factor Analysis</strong> busca encontrar <strong>factores latentes</strong>
+              que expliquen la relación entre varias variables observadas.
+            </p>
+            <p>
+              A diferencia de PCA, FA se enfoca más en la estructura común entre variables
+              que en conservar la varianza total.
+            </p>
+
+            <div class="note-box">
+              FA intenta responder qué factores ocultos podrían estar detrás de las variables medidas.
+            </div>
+
+            <div class="example-box">
+              En una encuesta, varias preguntas podrían estar reflejando un mismo factor latente,
+              como satisfacción, estrés o compromiso.
+            </div>
+          </div>
+        </div>
+
+        <div class="warn-box">
+          Diferencia clave: <strong>PCA resume la mayor variabilidad posible</strong>, mientras que
+          <strong>FA busca factores comunes o latentes</strong> que expliquen la relación entre variables.
         </div>
       </section>
 
       <section>
-        <h2>7. Resumen final</h2>
-        <p>
-          En aprendizaje no supervisado, los algoritmos trabajan sin una variable objetivo conocida.
-          Dentro de este enfoque:
-        </p>
-
+        <h2>6. Resumen final</h2>
         <ul class="step-list">
-          <li><strong>Clustering</strong> busca agrupar datos similares, como hacen K-Means y DBSCAN.</li>
-          <li><strong>K-Means</strong> usa centroides y normalmente distancia euclidiana.</li>
-          <li><strong>DBSCAN</strong> usa densidad, epsilon y cantidad mínima de vecinos.</li>
-          <li><strong>Reglas de asociación</strong> descubren qué elementos aparecen frecuentemente juntos.</li>
-          <li><strong>Apriori</strong> construye itemsets frecuentes paso a paso y elimina combinaciones inviables con pruning.</li>
+          <li><strong>Clustering</strong> agrupa observaciones similares y aquí se revisaron K-Means, DBSCAN y clustering jerárquico.</li>
+          <li><strong>Reglas de asociación</strong> estudian relaciones frecuentes entre ítems usando One-Hot Encoding, Apriori y métricas como support, confidence, lift, leverage y conviction.</li>
+          <li><strong>Reducción de dimensionalidad</strong> busca trabajar con menos variables, y aquí se diferenciaron PCA y FA.</li>
+          <li><strong>Gradient Boosting</strong> se dejó como aclaración porque es supervisado y no pertenece a no supervisado.</li>
         </ul>
 
         <div class="callout">
-          La idea general es descubrir estructura oculta en los datos, ya sea formando grupos
-          o encontrando relaciones frecuentes entre elementos.
+          La estructura correcta ayuda a entender que dentro del tema general de aprendizaje no supervisado
+          existen categorías diferentes, cada una con un propósito propio.
         </div>
       </section>
     </main>
